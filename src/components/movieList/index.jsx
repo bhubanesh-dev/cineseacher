@@ -10,6 +10,20 @@ import { useTranslation } from "react-i18next";
 
 import MovieListItem from "./MovieListItem";
 
+const RenderElement = ({ movies, t }) =>
+  isEmpty(movies) ? (
+    <NoData
+      className="flex h-screen w-full items-center justify-center"
+      title={t("noData")}
+    />
+  ) : (
+    <div className="mt-8 grid grid-cols-1 justify-items-center gap-y-8 md:grid-cols-3 lg:grid-cols-4">
+      {movies.map(movie => (
+        <MovieListItem key={movie.imdbID} {...movie} />
+      ))}
+    </div>
+  );
+
 const MovieList = () => {
   const { t } = useTranslation();
   const [movies, setMovies] = useState([]);
@@ -19,12 +33,6 @@ const MovieList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!debounceSearchKey) {
-        setMovies([]);
-
-        return;
-      }
-
       setLoading(true);
       try {
         const { Search: data } = await movieApi.fetch({ s: debounceSearchKey });
@@ -50,20 +58,7 @@ const MovieList = () => {
         value={query}
         onChange={e => setQuery(e.target.value)}
       />
-      {loading ? (
-        <PageLoader />
-      ) : !isEmpty(movies) ? (
-        <div className="mt-8 grid grid-cols-2 justify-items-center gap-y-8 md:grid-cols-3 lg:grid-cols-4">
-          {movies.map(movie => (
-            <MovieListItem key={movie.imdbID} {...movie} />
-          ))}
-        </div>
-      ) : (
-        <NoData
-          className="flex h-screen w-full items-center justify-center"
-          title={t("noData")}
-        />
-      )}
+      {loading ? <PageLoader /> : <RenderElement movies={movies} t={t} />}
     </section>
   );
 };
