@@ -1,6 +1,13 @@
-import "./App.css";
-// eslint-disable-next-line import/extensions
+import MovieList from "components/movieList";
+import SearchBar from "components/SearchBar";
 
-const App = () => <div className="text-lg text-red-400">check tailwind </div>;
+import "./App.css";
+
+const App = () => (
+  <div className="bg-[#f5f5f5] px-16 py-8">
+    <SearchBar />
+    <MovieList />
+  </div>
+);
 
 export default App;
