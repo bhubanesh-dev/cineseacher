@@ -1,4 +1,5 @@
 {
   "searchMovie": "Search movie",
-  "noData": "No movies to show"
+  "noData": "No movies to show",
+  "fallbackImg": "https://png.pngtree.com/element_pic/16/11/18/4f829e85866bd52d062ca58b4e1ecef5.png"
 }
