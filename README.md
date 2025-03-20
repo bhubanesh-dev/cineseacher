@@ -1,5 +1,3 @@
-# SmileCart
+# CINE SEARCHER
 
-A sample React project used for teaching React concepts via Bigbinary Academy.
-
-Wireframe: https://amaljith-k.neetowireframe.com/p/MIP/
+An efficient movie search website
