@@ -1,7 +1,12 @@
+import { useState } from "react";
+
 import { Button, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
 
-const MovieListItem = ({ title, year, poster }) => {
+import MovieModalView from "./MovieModalView";
+
+const MovieListItem = ({ title, year, poster, imdbID }) => {
+  const [showModal, setShowModal] = useState(false);
   const { t } = useTranslation();
 
   return (
@@ -24,7 +29,15 @@ const MovieListItem = ({ title, year, poster }) => {
         label={t("viewDetails")}
         size="medium"
         style="text"
+        onClick={() => setShowModal(true)}
       />
+      {showModal && (
+        <MovieModalView
+          id={imdbID}
+          showModal={showModal}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 };
