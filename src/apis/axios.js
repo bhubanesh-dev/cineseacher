@@ -9,29 +9,24 @@ import { t } from "i18next";
 import { Toastr } from "neetoui";
 import { evolve } from "ramda";
 
-const shouldShowToastr = response =>
-  typeof response === "object" && response?.noticeCode;
-
 const showSuccessToastr = response => {
-  if (shouldShowToastr(response.data)) Toastr.success(response.data);
-};
-
-const showErrorToastr = error => {
-  if (error.message === t("error.networkError")) {
-    Toastr.error(t("error.noInternetConnection"));
-  } else if (error.response?.status !== 404) {
-    Toastr.error(error);
+  if (response.data?.Response === "False") {
+    Toastr.error(response.data.Error);
   }
 };
 
-const transformResponseKeysToCamelCase = response => {
-  if (response.data) response.data = keysToCamelCase(response.data);
+const showErrorToastr = error => {
+  Toastr.error(
+    error.message === t("error.networkError")
+      ? t("error.noInternetConnection")
+      : error.response?.data?.Error || t("error.somethingWentWrong")
+  );
 };
 
 const responseInterceptors = () => {
   axios.interceptors.response.use(
     response => {
-      transformResponseKeysToCamelCase(response);
+      if (response.data) response.data = keysToCamelCase(response.data);
       showSuccessToastr(response);
 
       return response.data;
