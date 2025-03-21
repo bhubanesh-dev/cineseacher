@@ -33,6 +33,12 @@ const MovieList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!debounceSearchKey.trim()) {
+        setMovies([]);
+
+        return;
+      }
+
       setLoading(true);
       try {
         const { Search: data } = await movieApi.fetch({ s: debounceSearchKey });
