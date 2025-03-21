@@ -41,7 +41,7 @@ const MovieList = () => {
 
       setLoading(true);
       try {
-        const { Search: data } = await movieApi.fetch({ s: debounceSearchKey });
+        const { search: data } = await movieApi.fetch({ s: debounceSearchKey });
         setMovies(data || []);
       } catch (error) {
         console.error("Error fetching movies:", error);

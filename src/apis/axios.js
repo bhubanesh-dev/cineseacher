@@ -1,13 +1,11 @@
 import { ODMB_KEY } from "constants";
 
-import {
-  keysToCamelCase,
-  serializeKeysToSnakeCase,
-} from "@bigbinary/neeto-cist";
+import { serializeKeysToSnakeCase } from "@bigbinary/neeto-cist";
 import axios from "axios";
 import { t } from "i18next";
 import { Toastr } from "neetoui";
 import { evolve } from "ramda";
+import { convertKeysToCamelCase } from "utils/convertKeysToCamelCase";
 
 const showSuccessToastr = response => {
   if (response.data?.Response === "False") {
@@ -26,7 +24,7 @@ const showErrorToastr = error => {
 const responseInterceptors = () => {
   axios.interceptors.response.use(
     response => {
-      if (response.data) response.data = keysToCamelCase(response.data);
+      if (response.data) response.data = convertKeysToCamelCase(response.data);
       showSuccessToastr(response);
 
       return response.data;
