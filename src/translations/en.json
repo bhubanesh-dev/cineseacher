@@ -1,6 +1,7 @@
 {
   "searchMovie": "Search movie",
   "noData": "No movies to show",
+  "noHistory": "No movie histories to display",
   "title": "{{title}}",
   "year": "Year • {{year}}",
   "viewDetails": "View Details",
