@@ -1,14 +1,6 @@
-import ViewMovieHistory from "components/viewMovie";
+import Movie from "components/movie";
 
 import "./App.css";
 
-// eslint-disable-next-line import/extensions
-
-const App = () => (
-  <>
-    {/* comment dowwn it for only check the view history components  */}
-    {/* <MovieList /> */}
-    <ViewMovieHistory />
-  </>
-);
+const App = () => <Movie />;
 export default App;
