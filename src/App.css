@@ -11,3 +11,10 @@
   -scrollbar-ms-overflow-style: none;
   scrollbar-width: none;
 }
+.history-item{
+  background-color: #E4E4F8;
+}
+.history-item-selected {
+  background-color: #2f62ff;
+
+}
