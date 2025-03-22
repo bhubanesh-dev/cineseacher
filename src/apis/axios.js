@@ -8,8 +8,8 @@ import { evolve } from "ramda";
 import { convertKeysToCamelCase } from "utils/convertKeysToCamelCase";
 
 const showSuccessToastr = response => {
-  if (response.data?.Response === "False") {
-    Toastr.error(response.data.Error);
+  if (response.data?.response === "False") {
+    Toastr.error(response.data.error);
   }
 };
 
