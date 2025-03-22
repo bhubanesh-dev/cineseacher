@@ -18,7 +18,7 @@ const MovieListItem = ({ title, year, poster, imdbID }) => {
   };
 
   return (
-    <div className="flex h-auto w-56 flex-col rounded-lg border border-gray-200 bg-white px-6 pb-4 shadow-lg">
+    <div className="min-h-80 flex w-56 flex-col rounded-lg border border-gray-200 bg-white px-6 pb-4 shadow-lg">
       <div className="mx-auto mb-4 w-[80%]">
         <img
           alt={title}
