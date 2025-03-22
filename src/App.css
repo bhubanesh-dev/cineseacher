@@ -1,0 +1,13 @@
+.movie-list {
+  width: 75%;
+}
+.movie-history {
+  width: 25%;
+}
+.movie-history-container {
+  height: 80vh;
+}
+.hidden-scrollbar {
+  -scrollbar-ms-overflow-style: none;
+  scrollbar-width: none;
+}

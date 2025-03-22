@@ -1,8 +1,6 @@
-import MovieList from "components/movieList";
+import Movie from "components/movie";
 
 import "./App.css";
-// eslint-disable-next-line import/extensions
 
-const App = () => <MovieList />;
-
+const App = () => <Movie />;
 export default App;

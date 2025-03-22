@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Button, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
+import useMovieViewStore from "stores/useMovieViewStore";
 
 import MovieModalView from "./MovieModalView";
 
@@ -9,8 +10,15 @@ const MovieListItem = ({ title, year, poster, imdbID }) => {
   const [showModal, setShowModal] = useState(false);
   const { t } = useTranslation();
 
+  const { updateMovieList } = useMovieViewStore();
+
+  const handleMovieDetailsView = () => {
+    setShowModal(true);
+    updateMovieList({ imdbID, title });
+  };
+
   return (
-    <div className="flex h-auto w-64 flex-col rounded-lg border border-gray-200 bg-white px-6 pb-4 shadow-lg">
+    <div className="flex h-auto w-56 flex-col rounded-lg border border-gray-200 bg-white px-6 pb-4 shadow-lg">
       <div className="mx-auto mb-4 w-[80%]">
         <img
           alt={title}
@@ -29,7 +37,7 @@ const MovieListItem = ({ title, year, poster, imdbID }) => {
         label={t("viewDetails")}
         size="medium"
         style="text"
-        onClick={() => setShowModal(true)}
+        onClick={handleMovieDetailsView}
       />
       {showModal && (
         <MovieModalView

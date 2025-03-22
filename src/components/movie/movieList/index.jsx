@@ -17,7 +17,7 @@ const RenderElement = ({ movies, t }) =>
       title={t("noData")}
     />
   ) : (
-    <div className="mt-8 grid grid-cols-1 justify-items-center gap-y-8 md:grid-cols-3 lg:grid-cols-4">
+    <div className="movie-history-container  grid grid-cols-1 justify-items-center gap-y-8 overflow-y-scroll py-8 md:grid-cols-3 lg:grid-cols-4">
       {movies.map(movie => (
         <MovieListItem key={movie.imdbID} {...movie} />
       ))}
@@ -55,7 +55,7 @@ const MovieList = () => {
   }, [debounceSearchKey]);
 
   return (
-    <section className="flex flex-col bg-[#f5f5f5] px-16 py-8">
+    <section className="movie-list  flex flex-col bg-[#f5f5f5] px-16 py-8">
       <Input
         className="outline-none my-4 focus:border-[#add] focus:ring-1"
         placeholder={t("searchMovie")}
