@@ -23,7 +23,7 @@ const ViewMovieHistory = () => {
   }, [id]);
 
   return (
-    <section className="movie-history py-8">
+    <section className="movie-history border-l-2 py-8  shadow-lg">
       <Typography className="my-4 text-center" style="h2" weight="bold">
         {t("viewHistory")}
       </Typography>
@@ -41,7 +41,9 @@ const ViewMovieHistory = () => {
               style="body1"
               className={classNames(
                 "mx-8 rounded-xl border p-2 text-center",
-                id === it.imdbID ? "bg-blue-500 text-white" : "bg-gray-200"
+                id === it.imdbID
+                  ? "history-item-selected text-white"
+                  : "history-item"
               )}
             >
               {it.title}
