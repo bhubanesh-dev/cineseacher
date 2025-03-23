@@ -10,7 +10,7 @@ const Header = () => {
   const location = useLocation();
 
   return (
-    <header className="flex items-center  px-16 py-4">
+    <header className="borer-b-2 flex items-center px-16 py-4 shadow-md">
       <Typography style="h2" weight="bold">
         <Trans
           i18nKey="logoName"
