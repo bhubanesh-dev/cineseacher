@@ -1,70 +1,103 @@
-import React, { useEffect, useState } from "react";
+import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_INDEX } from "constants";
 
-import movieApi from "apis/movieApi";
-import PageLoader from "components/common/PageLoader";
-import useDebounce from "hooks/useDebounce";
+import React, { useState } from "react";
+
+import { PageLoader, ErrorPage } from "components/common/";
+import { useFetchMovies } from "hooks/reactQuery/useMoviesApi";
+import useFuncDebounce from "hooks/useFuncDebounce";
+import useQueryParams from "hooks/useQueryParams";
+import { filterNonNull } from "neetocist";
 import { Search } from "neetoicons";
-import { Input, NoData } from "neetoui";
-import { isEmpty } from "ramda";
+import { Input, NoData, Pagination } from "neetoui";
+import { mergeLeft } from "ramda";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import { buildUrl } from "utils/url";
 
 import MovieListItem from "./MovieListItem";
 
-const RenderElement = ({ movies, t }) =>
-  isEmpty(movies) ? (
+const RenderElement = ({ movies = [], searchQuery }) => {
+  const { t } = useTranslation();
+
+  return movies.length === 0 || !searchQuery ? (
     <NoData
       className="flex h-screen w-full items-center justify-center"
       title={t("noData")}
     />
   ) : (
-    <div className="movie-history-container  grid grid-cols-1 justify-items-center gap-y-8 overflow-y-scroll py-8 md:grid-cols-3 lg:grid-cols-4">
+    <div className="my-4 grid h-4/5 grid-cols-1 justify-items-center gap-y-8 overflow-y-scroll py-8 md:grid-cols-3 lg:grid-cols-4">
       {movies.map(movie => (
         <MovieListItem key={movie.imdbID} {...movie} />
       ))}
     </div>
   );
+};
 
 const MovieList = () => {
+  const queryParams = useQueryParams();
+  const { page, pageSize, s = "" } = queryParams;
+
+  const [searchQuery, setSearchQuery] = useState(s);
+
   const { t } = useTranslation();
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState("");
-  const debounceSearchKey = useDebounce(query);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!debounceSearchKey.trim()) {
-        setMovies([]);
+  const history = useHistory();
 
-        return;
-      }
+  const moviesParams = {
+    s,
+    page: Number(page) || DEFAULT_PAGE_INDEX,
+    pageSize: Number(pageSize) || DEFAULT_PAGE_SIZE,
+  };
 
-      setLoading(true);
-      try {
-        const { search: data } = await movieApi.fetch({ s: debounceSearchKey });
-        setMovies(data || []);
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-        setMovies([]);
-      } finally {
-        setLoading(false);
-      }
+  const handlePageNavigation = page => {
+    history.replace(buildUrl("/movies", mergeLeft({ page }, queryParams)));
+  };
+
+  const updateQueryParams = useFuncDebounce(value => {
+    const params = {
+      page: DEFAULT_PAGE_INDEX,
+      s: value || null,
     };
 
-    fetchData();
-  }, [debounceSearchKey]);
+    history.replace(buildUrl("/movies", filterNonNull(params)));
+  });
+
+  const {
+    data = {},
+    isLoading,
+    isFetching,
+    isError,
+  } = useFetchMovies(moviesParams, { enabled: !!moviesParams.s });
+
+  const { search: movies = [], totalResults = 0 } = data;
 
   return (
-    <section className="movie-list  flex flex-col bg-[#f5f5f5] px-16 py-8">
+    <section className="movie-list flex flex-col bg-[#f5f5f5] px-16 py-8">
       <Input
-        className="outline-none my-4 focus:border-[#add] focus:ring-1"
+        className="outline-none my-4 focus:border-blue-300 focus:ring-1"
         placeholder={t("searchMovie")}
         prefix={<Search />}
         type="search"
-        value={query}
-        onChange={e => setQuery(e.target.value)}
+        value={searchQuery}
+        onChange={({ target: { value } }) => {
+          updateQueryParams(value);
+          setSearchQuery(value);
+        }}
       />
-      {loading ? <PageLoader /> : <RenderElement movies={movies} t={t} />}
+      {isError && <ErrorPage />}
+      {isLoading || isFetching ? (
+        <PageLoader />
+      ) : (
+        <RenderElement movies={movies} searchQuery={moviesParams.s} />
+      )}
+      <div className="my-5 self-end">
+        <Pagination
+          count={totalResults || 0}
+          navigate={handlePageNavigation}
+          pageNo={Number(page) || DEFAULT_PAGE_INDEX}
+          pageSize={DEFAULT_PAGE_SIZE}
+        />
+      </div>
     </section>
   );
 };

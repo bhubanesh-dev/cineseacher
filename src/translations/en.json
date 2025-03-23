@@ -21,6 +21,7 @@
   },
   "error": {
     "noInternetConnection": "No Internet Connection",
-    "networkError": "Network Error"
+    "networkError": "Network Error",
+    "loadingMovie": "Oops! Something wrong happened"
   }
 }
