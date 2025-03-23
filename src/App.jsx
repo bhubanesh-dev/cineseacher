@@ -1,6 +1,24 @@
+import { Header, PageNotFound } from "components/common";
+import FavouriteMovie from "components/FavouriteMovie";
 import Movie from "components/movie";
+import {
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom/cjs/react-router-dom.min";
 
 import "./App.css";
+import routes from "./route";
 
-const App = () => <Movie />;
+const App = () => (
+  <>
+    <Header />
+    <Switch>
+      <Route exact component={Movie} path={routes.movies} />
+      <Route exact component={FavouriteMovie} path={routes.favouriteMovie} />
+      <Redirect exact from="/" to={routes.movies} />
+      <Route component={PageNotFound} path="*" />
+    </Switch>
+  </>
+);
 export default App;
