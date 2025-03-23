@@ -11,3 +11,11 @@ export const useShowMovie = id =>
     queryFn: () => movieApi.show({ i: id }),
     enabled: !!id,
   });
+
+export const useFetchMovies = params =>
+  useQuery({
+    queryKey: [QUERY_KEYS.MOVIES, params],
+    queryFn: () => movieApi.fetch(params),
+    keepPreviousData: true,
+    enabled: !!params.s,
+  });
