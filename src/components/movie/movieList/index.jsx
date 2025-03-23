@@ -9,7 +9,7 @@ import useQueryParams from "hooks/useQueryParams";
 import { filterNonNull } from "neetocist";
 import { Search } from "neetoicons";
 import { Input, NoData, Pagination } from "neetoui";
-import { mergeLeft } from "ramda";
+import { isEmpty, mergeLeft } from "ramda";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { buildUrl } from "utils/url";
@@ -19,7 +19,7 @@ import MovieListItem from "./MovieListItem";
 const RenderElement = ({ movies = [], searchQuery }) => {
   const { t } = useTranslation();
 
-  return movies.length === 0 || !searchQuery ? (
+  return isEmpty(movies) || !searchQuery ? (
     <NoData
       className="flex h-screen w-full items-center justify-center"
       title={t("noData")}
@@ -58,7 +58,6 @@ const MovieList = () => {
       page: DEFAULT_PAGE_INDEX,
       s: value || null,
     };
-
     history.replace(buildUrl("/movies", filterNonNull(params)));
   });
 
