@@ -4,6 +4,7 @@ import initializeAxios from "apis/axios";
 import ReactDOM from "react-dom/client";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import queryClient from "utils/queryClient";
 
@@ -21,8 +22,10 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-      <ToastContainer />
-      <App />
+      <BrowserRouter>
+        <ToastContainer />
+        <App />
+      </BrowserRouter>
     </QueryClientProvider>
   </React.StrictMode>
 );
