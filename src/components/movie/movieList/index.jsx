@@ -1,6 +1,6 @@
 import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_INDEX } from "constants";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { PageLoader, ErrorPage } from "components/common/";
 import { useFetchMovies } from "hooks/reactQuery/useMoviesApi";
@@ -71,12 +71,29 @@ const MovieList = () => {
 
   const { search: movies = [], totalResults = 0 } = data;
 
+  const inputElement = useRef(null);
+
+  useEffect(() => {
+    const handleKeyDown = e => {
+      if (e.key === "/") {
+        e.preventDefault();
+        inputElement.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <section className="movie-list flex flex-col bg-[#f5f5f5] px-16 py-8">
       <Input
         className="outline-none my-4 focus:border-blue-300 focus:ring-1"
         placeholder={t("searchMovie")}
         prefix={<Search />}
+        ref={inputElement}
         type="search"
         value={searchQuery}
         onChange={({ target: { value } }) => {
