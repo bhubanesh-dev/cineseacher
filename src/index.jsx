@@ -3,6 +3,7 @@ import React from "react";
 import initializeAxios from "apis/axios";
 import ReactDOM from "react-dom/client";
 import { QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { ToastContainer } from "react-toastify";
 import queryClient from "utils/queryClient";
 
@@ -19,6 +20,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       <ToastContainer />
       <App />
     </QueryClientProvider>
