@@ -4,10 +4,15 @@ import React, { useState } from "react";
 
 import { PageLoader, ErrorPage } from "components/common/";
 import { useFetchMovies } from "hooks/reactQuery/useMoviesApi";
-import useDebounce from "hooks/useDebounce";
+import useFuncDebounce from "hooks/useFuncDebounce";
+import useQueryParams from "hooks/useQueryParams";
+import { filterNonNull } from "neetocist";
 import { Search } from "neetoicons";
 import { Input, NoData, Pagination } from "neetoui";
+import { mergeLeft } from "ramda";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import { buildUrl } from "utils/url";
 
 import MovieListItem from "./MovieListItem";
 
@@ -29,21 +34,40 @@ const RenderElement = ({ movies = [], searchQuery }) => {
 };
 
 const MovieList = () => {
-  const { t } = useTranslation();
-  const [query, setQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE_INDEX);
-  const debounceSearchKey = useDebounce(query);
+  const queryParams = useQueryParams();
+  const { page, pageSize, s = "" } = queryParams;
 
-  const Params = debounceSearchKey
-    ? { s: debounceSearchKey, page: currentPage, pageSize: DEFAULT_PAGE_SIZE }
-    : {};
+  const [searchQuery, setSearchQuery] = useState(s);
+
+  const { t } = useTranslation();
+
+  const history = useHistory();
+
+  const moviesParams = {
+    s,
+    page: Number(page) || DEFAULT_PAGE_INDEX,
+    pageSize: Number(pageSize) || DEFAULT_PAGE_SIZE,
+  };
+
+  const handlePageNavigation = page => {
+    history.replace(buildUrl("/movies", mergeLeft({ page }, queryParams)));
+  };
+
+  const updateQueryParams = useFuncDebounce(value => {
+    const params = {
+      page: DEFAULT_PAGE_INDEX,
+      s: value || null,
+    };
+
+    history.replace(buildUrl("/movies", filterNonNull(params)));
+  });
 
   const {
     data = {},
     isLoading,
     isFetching,
     isError,
-  } = useFetchMovies(Params, { enabled: !!debounceSearchKey });
+  } = useFetchMovies(moviesParams, { enabled: !!moviesParams.s });
 
   const { search: movies = [], totalResults = 0 } = data;
 
@@ -54,20 +78,23 @@ const MovieList = () => {
         placeholder={t("searchMovie")}
         prefix={<Search />}
         type="search"
-        value={query}
-        onChange={e => setQuery(e.target.value)}
+        value={searchQuery}
+        onChange={({ target: { value } }) => {
+          updateQueryParams(value);
+          setSearchQuery(value);
+        }}
       />
       {isError && <ErrorPage />}
       {isLoading || isFetching ? (
         <PageLoader />
       ) : (
-        <RenderElement movies={movies} searchQuery={debounceSearchKey} />
+        <RenderElement movies={movies} searchQuery={moviesParams.s} />
       )}
       <div className="my-5 self-end">
         <Pagination
           count={totalResults || 0}
-          navigate={page => setCurrentPage(page)}
-          pageNo={currentPage || DEFAULT_PAGE_INDEX}
+          navigate={handlePageNavigation}
+          pageNo={Number(page) || DEFAULT_PAGE_INDEX}
           pageSize={DEFAULT_PAGE_SIZE}
         />
       </div>
