@@ -22,8 +22,8 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      <ToastContainer />
       <BrowserRouter>
-        <ToastContainer />
         <App />
       </BrowserRouter>
     </QueryClientProvider>

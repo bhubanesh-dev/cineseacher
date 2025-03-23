@@ -1,4 +1,5 @@
 {
+  "logoName": "<first>Cine</first> <second>Searcher</second>",
   "searchMovie": "Search movie",
   "noData": "No movies to show",
   "noHistory": "No movie histories to display",
@@ -23,5 +24,9 @@
     "noInternetConnection": "No Internet Connection",
     "networkError": "Network Error",
     "loadingMovie": "Oops! Something wrong happened"
+  },
+  "routes": {
+    "movies": "Home",
+    "favouriteMovies": "Favourites"
   }
 }
