@@ -41,8 +41,8 @@ const MovieListItem = ({ title, year, poster, imdbID }) => {
       />
       {showModal && (
         <MovieModalView
+          showModal
           id={imdbID}
-          showModal={showModal}
           onClose={() => setShowModal(false)}
         />
       )}

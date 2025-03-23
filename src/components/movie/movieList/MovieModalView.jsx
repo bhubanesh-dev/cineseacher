@@ -14,7 +14,7 @@ const MovieModalView = ({ showModal, id, onClose }) => {
     isLoading,
     isError,
   } = useShowMovie(id, {
-    enabled: showModal,
+    enabled: !!id && showModal,
   });
 
   const {
