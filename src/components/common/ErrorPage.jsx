@@ -7,7 +7,7 @@ const ErrorPage = () => {
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
-      {t("error.errorMovieLoading")}
+      {t("error.somethingWentWrong")}
     </div>
   );
 };
