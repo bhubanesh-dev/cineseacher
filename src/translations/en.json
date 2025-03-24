@@ -26,7 +26,7 @@
   "error": {
     "noInternetConnection": "No internet connection",
     "networkError": "Network error",
-    "errorMovieLoading": "Oops! Something went wrong."
+    "somethingWentWrong": "Something went wrong."
   },
   "routes": {
     "movies": "Home",

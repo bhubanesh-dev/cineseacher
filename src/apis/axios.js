@@ -1,13 +1,11 @@
-import { ODMB_KEY } from "constants";
+import { ODMB_KEY, ODMB_API_URL } from "constants";
 
-import { serializeKeysToSnakeCase } from "@bigbinary/neeto-cist";
 import axios from "axios";
 import { t } from "i18next";
 import { Toastr } from "neetoui";
-import { evolve } from "ramda";
 import { convertKeysToCamelCase } from "utils/convertKeysToCamelCase";
 
-const showSuccessToastr = response => {
+const CheckForGettingErrorInResposne = response => {
   if (response.data?.response === "False") {
     Toastr.error(response.data.error);
   }
@@ -17,7 +15,7 @@ const showErrorToastr = error => {
   Toastr.error(
     error.message === t("error.networkError")
       ? t("error.noInternetConnection")
-      : error.response?.data?.Error || t("error.somethingWentWrong")
+      : error.response?.data?.Error
   );
 };
 
@@ -25,7 +23,8 @@ const responseInterceptors = () => {
   axios.interceptors.response.use(
     response => {
       if (response.data) response.data = convertKeysToCamelCase(response.data);
-      showSuccessToastr(response);
+
+      CheckForGettingErrorInResposne(response); // Check: if in the resposne getting some error as per api
 
       return response.data;
     },
@@ -37,12 +36,6 @@ const responseInterceptors = () => {
   );
 };
 
-const requestInterceptors = () => {
-  axios.interceptors.request.use(
-    evolve({ data: serializeKeysToSnakeCase, params: serializeKeysToSnakeCase })
-  );
-};
-
 const setHttpHeaders = () => {
   axios.defaults.headers = {
     Accept: "application/json",
@@ -51,9 +44,8 @@ const setHttpHeaders = () => {
 };
 
 export default function initializeAxios() {
-  axios.defaults.baseURL = "https://www.omdbapi.com/";
+  axios.defaults.baseURL = ODMB_API_URL;
   axios.defaults.params = { apikey: ODMB_KEY };
   setHttpHeaders();
   responseInterceptors();
-  requestInterceptors();
 }

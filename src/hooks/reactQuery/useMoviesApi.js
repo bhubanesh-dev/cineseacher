@@ -1,8 +1,6 @@
 import { QUERY_KEYS } from "constants/query";
 
-// eslint-disable-next-line
-import movieApi from "apis/movieApi";
-
+import movieApi from "apis/movie";
 import { useQuery } from "react-query";
 
 export const useShowMovie = id =>
