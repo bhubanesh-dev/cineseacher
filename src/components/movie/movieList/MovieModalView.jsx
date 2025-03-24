@@ -3,7 +3,7 @@ import React from "react";
 import { ErrorPage, PageLoader } from "components/common";
 import { useShowMovie } from "hooks/reactQuery/useMoviesApi";
 import { Rating, RatingFilled } from "neetoicons";
-import { Modal, Typography } from "neetoui";
+import { Button, Modal, Typography } from "neetoui";
 import { find, isEmpty } from "ramda";
 import { Trans, useTranslation } from "react-i18next";
 import useFavoriteMoviesStore from "stores/useFavoriteMovieStore";
@@ -54,25 +54,31 @@ const MovieModalView = ({ showModal, id, onClose }) => {
     );
   }
 
-  console.log(movie, movie.imdbRating);
+  const handleToggleFavoriteMovie = () => {
+    toggleFavMovies({
+      title: movie?.title,
+      imdbID: movie?.imdbID,
+      imdbRating: movie?.imdbRating,
+    });
+  };
 
   return (
     <Modal isOpen={showModal} size="large" onClose={onClose}>
       <div className="min-h-96 flex flex-col p-8">
-        <Typography className="my-4 font-bold" style="h1">
+        <Typography className="relative my-4 font-bold" style="h1">
           {t("movieDetails.title", { title })}
-          <button
+          <Button
             className="ml-4"
-            onClick={() => {
-              toggleFavMovies({
-                title: movie?.title,
-                imdbID: movie?.imdbID,
-                imdbRating: movie?.imdbRating,
-              });
+            icon={movieFavStatus ? RatingFilled : Rating}
+            style="text"
+            tooltipProps={{
+              content: `${
+                movieFavStatus ? t("removeFromFavorite") : t("addToFavorite")
+              }`,
+              position: "right-end",
             }}
-          >
-            {movieFavStatus ? <RatingFilled /> : <Rating />}
-          </button>
+            onClick={handleToggleFavoriteMovie}
+          />
         </Typography>
         <div className="flex flex-wrap gap-2">
           {genre.split(", ").map(genreItem => (

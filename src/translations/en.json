@@ -9,6 +9,8 @@
   "fallbackImg": "https://png.pngtree.com/element_pic/16/11/18/4f829e85866bd52d062ca58b4e1ecef5.png",
   "viewHistory": "View History",
   "noFavoriteMovie": "Your Favorite movie collection is empty.",
+  "addToFavorite": "Add to favourites",
+  "removeFromFavorite": "Remove from favourite ",
   "movieDetails": {
     "title": "{{title}}",
     "genre": "{{genre}}",
