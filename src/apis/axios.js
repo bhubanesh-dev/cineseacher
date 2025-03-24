@@ -5,7 +5,7 @@ import { t } from "i18next";
 import { Toastr } from "neetoui";
 import { convertKeysToCamelCase } from "utils/convertKeysToCamelCase";
 
-const CheckForGettingErrorInResposne = response => {
+const checkForGettingErrorInResposne = response => {
   if (response.data?.response === "False") {
     Toastr.error(response.data.error);
   }
@@ -24,7 +24,7 @@ const responseInterceptors = () => {
     response => {
       if (response.data) response.data = convertKeysToCamelCase(response.data);
 
-      CheckForGettingErrorInResposne(response); // Check: if in the resposne getting some error as per api
+      checkForGettingErrorInResposne(response); // Check: if in the resposne getting some error as per api response
 
       return response.data;
     },
