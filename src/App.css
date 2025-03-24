@@ -17,3 +17,7 @@
 .history-item-selected {
   background-color: #2f62ff;
 }
+
+.custom-height {
+  height: 80dvh;
+}
