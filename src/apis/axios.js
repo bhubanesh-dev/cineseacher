@@ -1,4 +1,4 @@
-import { ODMB_KEY, ODMB_API_URL } from "constants";
+import { ODMB_KEY, ODMB_API_URL, AUTO_HIDE_TOAST_DURATION } from "constants";
 
 import axios from "axios";
 import { t } from "i18next";
@@ -7,7 +7,7 @@ import { convertKeysToCamelCase } from "utils/convertKeysToCamelCase";
 
 const checkForGettingErrorInResposne = response => {
   if (response.data?.response === "False") {
-    Toastr.error(response.data.error);
+    Toastr.error(response.data.error, { autoClose: AUTO_HIDE_TOAST_DURATION });
   }
 };
 
@@ -15,7 +15,8 @@ const showErrorToastr = error => {
   Toastr.error(
     error.message === t("error.networkError")
       ? t("error.noInternetConnection")
-      : error.response?.data?.Error
+      : error.response?.data?.Error,
+    { autoClose: AUTO_HIDE_TOAST_DURATION }
   );
 };
 
