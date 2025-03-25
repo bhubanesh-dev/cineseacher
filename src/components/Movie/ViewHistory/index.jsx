@@ -5,7 +5,7 @@ import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import useMovieViewStore from "stores/useMovieViewStore";
 
-import MovieHistoryItems from "./MovieHistoryItems";
+import MovieHistoryItems from "./Items";
 
 const ViewMoviesHistory = () => {
   const { t } = useTranslation();
