@@ -25,7 +25,7 @@ const RenderElement = ({ movies = [], searchQuery }) => {
       title={t("noData")}
     />
   ) : (
-    <div className="my-4 grid h-4/5 grid-cols-1 justify-items-center gap-y-8 overflow-y-scroll py-8 md:grid-cols-3 lg:grid-cols-4">
+    <div className="my-4 grid h-5/6 grid-cols-1 justify-items-center gap-y-8 overflow-y-scroll py-2 md:grid-cols-3 lg:grid-cols-4">
       {movies.map(movie => (
         <MovieListItem key={movie.imdbID} {...movie} />
       ))}
@@ -87,9 +87,9 @@ const MovieList = () => {
   }, []);
 
   return (
-    <section className="movie-list flex flex-col bg-[#f5f5f5] px-16 py-8">
+    <section className="movielist-viewhistory-container-height flex w-3/4 flex-col px-16  ">
       <Input
-        className="outline-none my-4 focus:border-blue-300 focus:ring-1"
+        className="outline-none my-4 py-2 focus:border-blue-300 focus:ring-1"
         placeholder={t("searchMovie")}
         prefix={<Search />}
         ref={inputElement}
@@ -106,14 +106,16 @@ const MovieList = () => {
       ) : (
         <RenderElement movies={movies} searchQuery={moviesParams.s} />
       )}
-      <div className="my-5 self-end">
-        <Pagination
-          count={totalResults || 0}
-          navigate={handlePageNavigation}
-          pageNo={Number(page) || DEFAULT_PAGE_INDEX}
-          pageSize={DEFAULT_PAGE_SIZE}
-        />
-      </div>
+      {moviesParams.s && (
+        <div className="my-5 self-end">
+          <Pagination
+            count={totalResults || 0}
+            navigate={handlePageNavigation}
+            pageNo={Number(page) || DEFAULT_PAGE_INDEX}
+            pageSize={DEFAULT_PAGE_SIZE}
+          />
+        </div>
+      )}
     </section>
   );
 };
