@@ -2,7 +2,7 @@
   "logoName": "<first>Cine</first> <second>Searcher</second>",
   "searchMovie": "Search movie",
   "noData": "No movies to show",
-  "noHistory": "No movie history available",
+  "noMovieHistory": "No movies in your viewing history.",
   "title": "{{title}}",
   "year": "Year • {{year}}",
   "viewDetails": "View details",

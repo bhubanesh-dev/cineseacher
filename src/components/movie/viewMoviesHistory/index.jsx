@@ -1,29 +1,30 @@
 import React, { useEffect, useRef } from "react";
 
-import classNames from "classnames";
 import { NoData, Typography } from "neetoui";
 import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import useMovieViewStore from "stores/useMovieViewStore";
 
-const ViewMovieHistory = () => {
+import MovieHistoryItems from "./MovieHistoryItems";
+
+const ViewMoviesHistory = () => {
   const { t } = useTranslation();
   const { movieList, getCurrentActiveID } = useMovieViewStore();
-  const id = getCurrentActiveID();
+  const activeId = getCurrentActiveID();
 
   const itemRefs = useRef({});
 
   useEffect(() => {
-    if (id && itemRefs.current[id]) {
-      itemRefs.current[id].scrollIntoView({
+    if (activeId && itemRefs.current[activeId]) {
+      itemRefs.current[activeId].scrollIntoView({
         behavior: "smooth",
         block: "nearest",
       });
     }
-  }, [id]);
+  }, [activeId]);
 
   return (
-    <section className="movie-history border-l-2 py-8  shadow-lg">
+    <section className="movie-history border-l-2 py-8 shadow-lg">
       <Typography className="my-4 text-center" style="h2" weight="bold">
         {t("viewHistory")}
       </Typography>
@@ -34,20 +35,13 @@ const ViewMovieHistory = () => {
             title={t("noHistory")}
           />
         ) : (
-          movieList.map(it => (
-            <Typography
-              key={it.imdbID}
-              ref={el => (itemRefs.current[it.imdbID] = el)}
-              style="body1"
-              className={classNames(
-                "mx-8 rounded-xl border p-2 text-center",
-                id === it.imdbID
-                  ? "history-item-selected text-white"
-                  : "history-item"
-              )}
-            >
-              {it.title}
-            </Typography>
+          movieList.map(movie => (
+            <MovieHistoryItems
+              activeId={activeId}
+              key={movie.imdbID}
+              movie={movie}
+              ref={el => (itemRefs.current[movie.imdbID] = el)}
+            />
           ))
         )}
       </div>
@@ -55,4 +49,4 @@ const ViewMovieHistory = () => {
   );
 };
 
-export default ViewMovieHistory;
+export default ViewMoviesHistory;
