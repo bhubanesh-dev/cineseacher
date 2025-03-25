@@ -5,7 +5,7 @@ import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import useMovieViewStore from "stores/useMovieViewStore";
 
-import MovieHistoryItems from "./MovieHistoryItems";
+import MovieHistoryItems from "./Items";
 
 const ViewMoviesHistory = () => {
   const { t } = useTranslation();
@@ -24,11 +24,11 @@ const ViewMoviesHistory = () => {
   }, [activeId]);
 
   return (
-    <section className="movie-history border-l-2 py-8 shadow-lg">
-      <Typography className="my-4 text-center" style="h2" weight="bold">
+    <section className="h-screen w-1/4 border-l-2 py-2 shadow-lg">
+      <Typography className="my-2 text-center" style="h2" weight="bold">
         {t("viewHistory")}
       </Typography>
-      <div className="movie-history-container mt-8 flex max-h-[500px] flex-col gap-4 overflow-y-auto">
+      <div className="my-8 flex h-4/5  flex-col gap-4 overflow-y-auto  px-4 ">
         {isEmpty(movieList) ? (
           <NoData
             className="flex h-screen w-full items-center justify-center"

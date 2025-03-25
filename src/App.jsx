@@ -1,6 +1,6 @@
 import { Header, PageNotFound } from "components/common";
 import FavouriteMovie from "components/FavouriteMovie";
-import Movie from "components/movie";
+import Movie from "components/Movie";
 import {
   Redirect,
   Route,
@@ -11,7 +11,7 @@ import "./App.css";
 import routes from "./route";
 
 const App = () => (
-  <>
+  <main className="h-screen w-full overflow-hidden">
     <Header />
     <Switch>
       <Route exact component={Movie} path={routes.movies} />
@@ -19,6 +19,6 @@ const App = () => (
       <Redirect exact from="/" to={routes.movies} />
       <Route component={PageNotFound} path="*" />
     </Switch>
-  </>
+  </main>
 );
 export default App;
