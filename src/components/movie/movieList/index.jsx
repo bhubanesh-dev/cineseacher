@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { buildUrl } from "utils/url";
 
-import MovieListItem from "./MovieListItem";
+import MovieListItem from "./Items";
 
 const RenderElement = ({ movies = [], searchQuery }) => {
   const { t } = useTranslation();

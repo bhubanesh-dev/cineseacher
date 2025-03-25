@@ -4,7 +4,7 @@ import { Button, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
 import useMovieViewStore from "stores/useMovieViewStore";
 
-import MovieModalView from "./MovieModalView";
+import MovieModalView from "./Modal";
 
 const MovieListItem = ({ title, year, poster, imdbID }) => {
   const [showModal, setShowModal] = useState(false);
