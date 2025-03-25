@@ -1,7 +1,7 @@
 import React from "react";
 
-import MovieList from "./movieList";
-import ViewMoviesHistory from "./viewMoviesHistory";
+import MovieList from "./MovieList";
+import ViewMoviesHistory from "./viewHistory";
 
 const Movie = () => (
   <section className=" flex h-5/6 w-full flex-row ">
