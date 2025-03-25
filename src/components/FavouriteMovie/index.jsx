@@ -5,7 +5,7 @@ import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import useFavoriteMoviesStore from "stores/useFavoriteMovieStore";
 
-import FavoriteMovieItem from "./FavoriteMovieItem";
+import FavoriteMovieItem from "./MovieItems";
 
 const FavouriteMovie = () => {
   const { favoriteMoviesList = [] } = useFavoriteMoviesStore();
