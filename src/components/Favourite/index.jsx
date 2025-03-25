@@ -5,7 +5,7 @@ import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import useFavoriteMoviesStore from "stores/useFavoriteMovieStore";
 
-import FavoriteMovieItem from "./MovieItems";
+import FavoriteMovieItem from "./Items";
 
 const FavouriteMovie = () => {
   const { favoriteMoviesList = [] } = useFavoriteMoviesStore();
@@ -17,7 +17,7 @@ const FavouriteMovie = () => {
       title={t("noFavoriteMovie")}
     />
   ) : (
-    <section className="min-h-4/5 flex flex-col items-center justify-center gap-4 px-16 py-4">
+    <section className="mt-6 flex h-4/5 flex-col items-center gap-4 overflow-y-scroll">
       {favoriteMoviesList.map(it => (
         <FavoriteMovieItem {...it} key={it.imdbID} />
       ))}

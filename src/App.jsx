@@ -1,5 +1,5 @@
 import { Header, PageNotFound } from "components/common";
-import FavouriteMovie from "components/FavouriteMovie";
+import FavouriteMovie from "components/Favourite";
 import Movie from "components/Movie";
 import {
   Redirect,
