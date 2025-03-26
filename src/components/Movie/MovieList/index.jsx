@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import { buildUrl } from "utils/url";
 
 import MoviesCointainer from "./Cointainer";
+import FilterParameters from "./FilterParameters";
 import SearchInput from "./SearchInput";
 
 const MovieList = () => {
@@ -49,11 +50,14 @@ const MovieList = () => {
 
   return (
     <section className="movielist-viewhistory-container-height flex w-3/4 flex-col px-16">
-      <SearchInput
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        updateQueryParams={updateQueryParams}
-      />
+      <div className="flex flex-row items-center gap-4">
+        <SearchInput
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          updateQueryParams={updateQueryParams}
+        />
+        <FilterParameters />
+      </div>
       {isError && <ErrorPage />}
       {isLoading || isFetching ? (
         <PageLoader />
