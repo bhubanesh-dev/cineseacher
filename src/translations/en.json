@@ -43,5 +43,12 @@
     "title": "Remove all moives from history?",
     "message": "You are removing all movies from the history. Do you want to continue?",
     "button": "Yes, remove"
+  },
+  "filterParmaters": {
+    "year": "Year",
+    "inputYear": "Input year",
+    "type": "Type",
+    "movie": "Movie",
+    "series": "Series"
   }
 }
