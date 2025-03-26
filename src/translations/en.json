@@ -44,11 +44,12 @@
     "message": "You are removing all movies from the history. Do you want to continue?",
     "button": "Yes, remove"
   },
-  "filterParmaters": {
+  "filterParameters": {
     "year": "Year",
     "inputYear": "Input year",
     "type": "Type",
     "movie": "Movie",
-    "series": "Series"
+    "series": "Series",
+    "invalidYear": "Invalid Year"
   }
 }
