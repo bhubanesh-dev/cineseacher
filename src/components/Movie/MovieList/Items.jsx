@@ -6,7 +6,7 @@ import useMovieViewStore from "stores/useMovieViewStore";
 
 import MovieModalView from "../Modal";
 
-const MovieListItem = ({ title, year, poster, imdbID }) => {
+const MovieListItem = ({ title, year, poster, imdbID, type }) => {
   const [showModal, setShowModal] = useState(false);
   const { t } = useTranslation();
 
@@ -30,7 +30,7 @@ const MovieListItem = ({ title, year, poster, imdbID }) => {
         {t("title", { title })}
       </Typography>
       <Typography className="mb-2 text-sm font-medium text-gray-600">
-        {t("year", { year })}
+        {type} • {year}
       </Typography>
       <Button
         className="view-details my-2  w-32 bg-gray-100 font-bold text-blue-500"

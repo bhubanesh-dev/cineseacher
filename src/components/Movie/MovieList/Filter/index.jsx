@@ -35,10 +35,9 @@ const FilterParameters = ({
 
   useEffect(() => {
     const applyFilter = async () => {
-      const errors = await formik.validateForm(); // Manually validate
+      const errors = await formik.validateForm();
 
       if (Object.keys(errors).length === 0) {
-        // No errors -> Apply filter
         setFilterQuery({ year: formik.values.year, type: formik.values.type });
         updateQueryParams({
           year: formik.values.year,
@@ -49,7 +48,7 @@ const FilterParameters = ({
     };
 
     applyFilter();
-  }, [formik, searchQuery, setFilterQuery, updateQueryParams]);
+  }, [formik.values]);
 
   const handleTypeChange = selectedType => {
     const { movie, series } = formik.values.types;
