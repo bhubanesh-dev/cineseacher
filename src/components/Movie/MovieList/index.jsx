@@ -65,7 +65,7 @@ const MovieList = () => {
   const { search: movies = [], totalResults = 0 } = data;
 
   return (
-    <section className="movie-list-view-history-container-height flex w-3/4 flex-col px-16">
+    <section className="movie-list-view-history-container-height mt-4 flex w-3/4 flex-col px-16">
       <div className="flex flex-row items-center gap-4">
         <SearchInput
           searchQuery={searchQuery}

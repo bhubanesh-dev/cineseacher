@@ -35,19 +35,19 @@ const ViewMoviesHistory = () => {
 
   return (
     <section className="flex h-screen w-1/4 flex-col border-l-2 py-2 shadow-lg">
-      <div className="mx-8 my-auto flex flex-row items-center justify-between px-6 py-2 ">
+      <div className="mx-8 my-2 flex flex-row items-center justify-between border-b-2 border-gray-400 px-6 py-2">
         <Typography style="h2" weight="bold">
           {t("viewHistory")}
         </Typography>
         <Button
-          className="text-black hover:text-red-500"
+          className="hover:pointer text-red-500"
           iconSize={30}
           label={t("clearAll")}
           style="tertiary"
           onClick={() => setShouldShowDeleteAlert(true)}
         />
       </div>
-      <div className="my-8 flex h-4/5 flex-col gap-4 overflow-y-auto  px-4 ">
+      <div className="my-2 flex h-4/5 flex-col gap-4 overflow-y-auto  px-4 ">
         {isEmpty(movieList) ? (
           <NoData
             className="flex h-screen w-full items-center justify-center"
