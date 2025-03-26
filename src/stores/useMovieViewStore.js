@@ -1,4 +1,4 @@
-import { prepend, reject, any } from "ramda";
+import { assoc, pipe, prepend, reject, any } from "ramda";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -35,6 +35,9 @@ const useMovieViewStore = create(
         }),
 
       getCurrentActiveID: () => get().currentActiveID,
+
+      deleteAllMoviesHistory: () =>
+        set(pipe(assoc("movieList", []), assoc("currentActiveID", 0))),
     }),
     { name: "Movie_List" }
   )

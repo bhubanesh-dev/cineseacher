@@ -23,7 +23,7 @@ const MovieHistoryItems = forwardRef(({ activeId, movie = {} }, ref) => {
   return (
     <div
       className={classNames(
-        "mx-8 my-auto flex flex-row items-center justify-between rounded-xl border px-6 py-2 ",
+        "mx-8 flex h-12 flex-row items-center justify-between rounded-xl border px-6 py-2 ",
         activeId === imdbID
           ? "history-item-selected text-white"
           : "history-item"

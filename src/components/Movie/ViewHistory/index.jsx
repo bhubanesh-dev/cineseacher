@@ -1,18 +1,28 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import { NoData, Typography } from "neetoui";
+import { Alert, Button, NoData, Typography } from "neetoui";
 import { isEmpty } from "ramda";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import useMovieViewStore from "stores/useMovieViewStore";
 
 import MovieHistoryItems from "./Items";
 
 const ViewMoviesHistory = () => {
   const { t } = useTranslation();
-  const { movieList, getCurrentActiveID } = useMovieViewStore();
+
+  const { movieList, getCurrentActiveID, deleteAllMoviesHistory } =
+    useMovieViewStore();
+
   const activeId = getCurrentActiveID();
 
   const itemRefs = useRef({});
+
+  const [shouldShowDeleteAlert, setShouldShowDeleteAlert] = useState(false);
+
+  const handleOnAlertSubmit = () => {
+    deleteAllMoviesHistory();
+    setShouldShowDeleteAlert(false);
+  };
 
   useEffect(() => {
     if (activeId && itemRefs.current[activeId]) {
@@ -24,15 +34,24 @@ const ViewMoviesHistory = () => {
   }, [activeId]);
 
   return (
-    <section className="h-screen w-1/4 border-l-2 py-2 shadow-lg">
-      <Typography className="my-2 text-center" style="h2" weight="bold">
-        {t("viewHistory")}
-      </Typography>
-      <div className="my-8 flex h-4/5  flex-col gap-4 overflow-y-auto  px-4 ">
+    <section className="flex h-screen w-1/4 flex-col border-l-2 py-2 shadow-lg">
+      <div className="mx-8 my-auto flex flex-row items-center justify-between px-6 py-2 ">
+        <Typography style="h2" weight="bold">
+          {t("viewHistory")}
+        </Typography>
+        <Button
+          className="text-black hover:text-red-500"
+          iconSize={30}
+          label={t("clearAll")}
+          style="tertiary"
+          onClick={() => setShouldShowDeleteAlert(true)}
+        />
+      </div>
+      <div className="my-8 flex h-4/5 flex-col gap-4 overflow-y-auto  px-4 ">
         {isEmpty(movieList) ? (
           <NoData
             className="flex h-screen w-full items-center justify-center"
-            title={t("noHistory")}
+            title={t("noMoviesHistory")}
           />
         ) : (
           movieList.map(movie => (
@@ -45,6 +64,14 @@ const ViewMoviesHistory = () => {
           ))
         )}
       </div>
+      <Alert
+        isOpen={shouldShowDeleteAlert}
+        message={<Trans i18nKey="removeAllConfirmation.message" />}
+        submitButtonLabel={t("removeAllConfirmation.button")}
+        title={t("removeAllConfirmation.title")}
+        onClose={() => setShouldShowDeleteAlert(false)}
+        onSubmit={handleOnAlertSubmit}
+      />
     </section>
   );
 };

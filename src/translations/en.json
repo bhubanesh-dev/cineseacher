@@ -2,11 +2,12 @@
   "logoName": "<first>Cine</first> <second>Searcher</second>",
   "searchMovie": "Search movie",
   "noData": "No movies to show",
-  "noMovieHistory": "No movies in your viewing history.",
+  "noMoviesHistory": "No movies in your viewing history.",
   "title": "{{title}}",
   "year": "Year • {{year}}",
   "viewDetails": "View details",
   "viewHistory": "View history",
+  "clearAll": "Clear all",
   "noFavoriteMovie": "Your favorite movie collection is empty.",
   "addToFavorite": "Add to favorites",
   "removeFromFavorite": "Remove from favorites",
@@ -36,6 +37,11 @@
   "removeItemConfirmation": {
     "title": "Remove from history?",
     "message": "You are removing <strong>{{title}}</strong> from history. Do you want to continue?",
+    "button": "Yes, remove all"
+  },
+  "removeAllConfirmation": {
+    "title": "Remove all moives from history?",
+    "message": "You are removing all movies from the history. Do you want to continue?",
     "button": "Yes, remove"
   }
 }
