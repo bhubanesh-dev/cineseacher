@@ -7,7 +7,7 @@ import useFavoriteMoviesStore from "stores/useFavoriteMovieStore";
 
 import FavoriteMovieItem from "./Items";
 
-const FavouriteMovie = () => {
+const FavoriteMovie = () => {
   const { favoriteMoviesList = [] } = useFavoriteMoviesStore();
   const { t } = useTranslation();
 
@@ -25,4 +25,4 @@ const FavouriteMovie = () => {
   );
 };
 
-export default FavouriteMovie;
+export default FavoriteMovie;

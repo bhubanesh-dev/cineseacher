@@ -6,38 +6,56 @@ const useMovieViewStore = create(
   persist(
     (set, get) => ({
       movieList: [],
-      currentActiveID: 0,
+      getCurrentActiveMovieID: 0,
 
-      addMovies: obj =>
+      addMovies: movie =>
         set(({ movieList }) => {
           const isMovieExist = any(
-            ({ imdbID }) => imdbID === obj.imdbID,
+            ({ imdbID }) => imdbID === movie.imdbID,
             movieList
           );
 
           return {
-            movieList: isMovieExist ? movieList : prepend(obj, movieList),
-            currentActiveID: obj.imdbID,
+            movieList: isMovieExist ? movieList : prepend(movie, movieList),
+            getCurrentActiveMovieID: movie.imdbID,
           };
         }),
 
       removeMovies: id =>
-        set(({ movieList, currentActiveID }) => {
-          const isMovieExist = any(({ imdbID }) => imdbID === id, movieList);
+        set(state => {
+          const isMovieExist = any(
+            ({ imdbID }) => imdbID === id,
+            state.movieList
+          );
+          let updatedMovieList = state.movieList;
+
+          if (isMovieExist) {
+            updatedMovieList = reject(
+              ({ imdbID }) => imdbID === id,
+              state.movieList
+            );
+          }
+
+          let newActiveID = state.getCurrentActiveMovieID;
+
+          if (newActiveID === id) {
+            if (updatedMovieList.length > 0) {
+              newActiveID = updatedMovieList[0].imdbID;
+            } else {
+              newActiveID = null;
+            }
+          }
 
           return {
-            movieList: isMovieExist
-              ? reject(({ imdbID }) => imdbID === id, movieList)
-              : movieList,
-
-            currentActiveID: currentActiveID === id ? 0 : currentActiveID,
+            movieList: updatedMovieList,
+            getCurrentActiveMovieID: newActiveID,
           };
         }),
 
-      getCurrentActiveID: () => get().currentActiveID,
+      getCurrentActiveID: () => get().getCurrentActiveMovieID,
 
       deleteAllMoviesHistory: () =>
-        set(pipe(assoc("movieList", []), assoc("currentActiveID", 0))),
+        set(pipe(assoc("movieList", []), assoc("getCurrentActiveMovieID", 0))),
     }),
     { name: "Movie_List" }
   )
