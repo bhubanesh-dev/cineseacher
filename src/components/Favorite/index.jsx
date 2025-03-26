@@ -19,7 +19,7 @@ const FavoriteMovie = () => {
   ) : (
     <section className="mt-6 flex h-4/5 flex-col items-center gap-4 overflow-y-scroll">
       {favoriteMoviesList.map(it => (
-        <FavoriteMovieItem {...it} key={it.imdbID} />
+        <FavoriteMovieItem key={it.imdbID} {...it} />
       ))}
     </section>
   );

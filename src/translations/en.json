@@ -11,10 +11,6 @@
   "addToFavorite": "Add to favorites",
   "removeFromFavorite": "Remove from favorites",
   "movieDetails": {
-    "type": {
-      "movie": "Movie",
-      "series": "Series"
-    },
     "viewMore": "View more",
     "director": "Director",
     "actors": "Actors",
