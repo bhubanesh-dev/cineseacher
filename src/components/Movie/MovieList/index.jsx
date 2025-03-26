@@ -1,43 +1,59 @@
 import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_INDEX } from "constants";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import { PageLoader, ErrorPage } from "components/common/";
 import { useFetchMovies } from "hooks/reactQuery/useMoviesApi";
 import useFuncDebounce from "hooks/useFuncDebounce";
 import useQueryParams from "hooks/useQueryParams";
 import { filterNonNull } from "neetocist";
-import { mergeLeft } from "ramda";
+import { isEmpty, mergeLeft } from "ramda";
 import { useHistory } from "react-router-dom";
 import { buildUrl } from "utils/url";
 
 import MoviesCointainer from "./Cointainer";
-import FilterParameters from "./FilterParameters";
+import FilterParameters from "./Filter";
 import SearchInput from "./SearchInput";
 
 const MovieList = () => {
   const queryParams = useQueryParams();
-  const { page, pageSize, s = "" } = queryParams;
+  const { page, pageSize, s = "", year = 0, type = "" } = queryParams;
+
   const [searchQuery, setSearchQuery] = useState(s);
+  const [filterQuery, setFilterQuery] = useState({ year, type });
+
   const history = useHistory();
 
   const moviesParams = {
     s,
     page: Number(page) || DEFAULT_PAGE_INDEX,
     pageSize: Number(pageSize) || DEFAULT_PAGE_SIZE,
+    y: Number(year) || null,
+    type: type || null,
   };
 
   const handlePageNavigation = page => {
     history.replace(buildUrl("/movies", mergeLeft({ page }, queryParams)));
   };
 
-  const updateQueryParams = useFuncDebounce(value => {
-    const params = {
-      page: DEFAULT_PAGE_INDEX,
-      s: value || null,
-    };
-    history.replace(buildUrl("/movies", filterNonNull(params)));
-  });
+  const updateQueryParams = useFuncDebounce(
+    useCallback(
+      query => {
+        const { s, year, type } = query || {};
+        const isSearchFilled = !isEmpty(s);
+
+        const params = {
+          page: isSearchFilled ? DEFAULT_PAGE_INDEX : null,
+          s: isSearchFilled ? s : null,
+          year: isSearchFilled ? year : null,
+          type: isSearchFilled ? type : null,
+        };
+
+        history.replace(buildUrl("/movies", filterNonNull(params)));
+      },
+      [history]
+    )
+  );
 
   const {
     data = {},
@@ -56,7 +72,14 @@ const MovieList = () => {
           setSearchQuery={setSearchQuery}
           updateQueryParams={updateQueryParams}
         />
-        <FilterParameters />
+        {moviesParams.s && (
+          <FilterParameters
+            filterQuery={filterQuery}
+            searchQuery={searchQuery}
+            setFilterQuery={setFilterQuery}
+            updateQueryParams={updateQueryParams}
+          />
+        )}
       </div>
       {isError && <ErrorPage />}
       {isLoading || isFetching ? (
