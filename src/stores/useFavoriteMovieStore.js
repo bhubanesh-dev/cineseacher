@@ -6,24 +6,24 @@ const useFavoriteMoviesStore = create(
   persist(
     set => ({
       favoriteMoviesList: [],
-      toggleFavMovies: obj =>
+      toggleFavMovies: movie =>
         set(({ favoriteMoviesList }) => {
           const isMovieInList = any(
-            ({ imdbID }) => imdbID === obj.imdbID,
+            ({ imdbID }) => imdbID === movie.imdbID,
             favoriteMoviesList
           );
 
           return {
             favoriteMoviesList: isMovieInList
               ? reject(
-                  ({ imdbID }) => imdbID === obj.imdbID,
+                  ({ imdbID }) => imdbID === movie.imdbID,
                   favoriteMoviesList
                 )
-              : prepend(obj, favoriteMoviesList),
+              : prepend(movie, favoriteMoviesList),
           };
         }),
     }),
-    { name: "Fav_Movie_List" }
+    { name: "Favorite_Movie_List" }
   )
 );
 
