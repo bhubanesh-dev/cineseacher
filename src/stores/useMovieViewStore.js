@@ -1,4 +1,4 @@
-import * as R from "ramda";
+import { prepend, reject, any } from "ramda";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -8,26 +8,33 @@ const useMovieViewStore = create(
       movieList: [],
       currentActiveID: 0,
 
-      updateMovieList: obj =>
-        set(state => {
-          const findMovie = state.movieList.find(
-            it => it.imdbID === obj.imdbID
+      addMovies: obj =>
+        set(({ movieList }) => {
+          const isMovieExist = any(
+            ({ imdbID }) => imdbID === obj.imdbID,
+            movieList
           );
 
-          if (findMovie) {
-            return { movieList: state.movieList, currentActiveID: obj.imdbID };
-          }
-
           return {
-            movieList: [obj, ...state.movieList],
+            movieList: isMovieExist ? movieList : prepend(obj, movieList),
             currentActiveID: obj.imdbID,
           };
         }),
 
-      getCurrentActiveID: () => get().currentActiveID,
+      removeMovies: id =>
+        set(({ movieList, currentActiveID }) => {
+          const isMovieExist = any(({ imdbID }) => imdbID === id, movieList);
 
-      deleteAllHistory: () =>
-        set(R.pipe(R.assoc("movieList", []), R.assoc("currentActiveID", 0))),
+          return {
+            movieList: isMovieExist
+              ? reject(({ imdbID }) => imdbID === id, movieList)
+              : movieList,
+
+            currentActiveID: currentActiveID === id ? 0 : currentActiveID,
+          };
+        }),
+
+      getCurrentActiveID: () => get().currentActiveID,
     }),
     { name: "Movie_List" }
   )

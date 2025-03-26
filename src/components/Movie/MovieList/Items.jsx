@@ -10,11 +10,11 @@ const MovieListItem = ({ title, year, poster, imdbID }) => {
   const [showModal, setShowModal] = useState(false);
   const { t } = useTranslation();
 
-  const { updateMovieList } = useMovieViewStore();
+  const { addMovies } = useMovieViewStore();
 
   const handleMovieDetailsView = () => {
     setShowModal(true);
-    updateMovieList({ imdbID, title });
+    addMovies({ imdbID, title });
   };
 
   return (

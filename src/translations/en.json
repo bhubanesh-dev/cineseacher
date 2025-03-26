@@ -32,5 +32,10 @@
   "routes": {
     "movies": "Home",
     "favouriteMovies": "Favourites"
+  },
+  "removeItemConfirmation": {
+    "title": "Remove from history?",
+    "message": "You are removing <strong>{{title}}</strong> from history. Do you want to continue?",
+    "button": "Yes, remove"
   }
 }
