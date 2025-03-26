@@ -1,10 +1,11 @@
 import i18n from "src/common/i18n";
 import * as Yup from "yup";
 
-const maxYear = new Date().getFullYear() + 5;
+const maxYear = new Date().getFullYear();
 
 export const VALIDATION_SCHEMA = Yup.object().shape({
   year: Yup.string()
+    .nullable()
     .matches(/^\d{4}$/, i18n.t("filterParameters.invalidYear"))
     .test(
       "valid-year-range",

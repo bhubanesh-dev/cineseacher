@@ -1,5 +1,5 @@
 import { Header, PageNotFound } from "components/common";
-import FavoriteMovie from "components/Favorite";
+import Favorite from "components/Favorite";
 import Movie from "components/Movie";
 import {
   Redirect,
@@ -15,7 +15,7 @@ const App = () => (
     <Header />
     <Switch>
       <Route exact component={Movie} path={routes.movies} />
-      <Route exact component={FavoriteMovie} path={routes.favoriteMovie} />
+      <Route exact component={Favorite} path={routes.favoriteMovie} />
       <Redirect exact from="/" to={routes.movies} />
       <Route component={PageNotFound} path="*" />
     </Switch>
