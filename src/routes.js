@@ -1,7 +1,7 @@
 const routes = {
   root: "/",
   movies: "/movies",
-  favouriteMovie: "/favourite",
+  favoriteMovie: "/favorite",
 };
 
 export default routes;

@@ -11,7 +11,7 @@ import { isEmpty, mergeLeft } from "ramda";
 import { useHistory } from "react-router-dom";
 import { buildUrl } from "utils/url";
 
-import MoviesCointainer from "./Cointainer";
+import MoviesContainer from "./Container";
 import FilterParameters from "./Filter";
 import SearchInput from "./SearchInput";
 
@@ -65,7 +65,7 @@ const MovieList = () => {
   const { search: movies = [], totalResults = 0 } = data;
 
   return (
-    <section className="movielist-viewhistory-container-height flex w-3/4 flex-col px-16">
+    <section className="movie-list-view-history-container-height flex w-3/4 flex-col px-16">
       <div className="flex flex-row items-center gap-4">
         <SearchInput
           searchQuery={searchQuery}
@@ -85,7 +85,7 @@ const MovieList = () => {
       {isLoading || isFetching ? (
         <PageLoader />
       ) : (
-        <MoviesCointainer
+        <MoviesContainer
           handlePageNavigation={handlePageNavigation}
           movies={movies}
           page={page}

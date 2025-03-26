@@ -13,7 +13,7 @@ const SearchInput = ({ searchQuery, setSearchQuery, updateQueryParams }) => {
 
   return (
     <Input
-      className="my-4 w-full py-2 focus:border-blue-300 focus:ring-1"
+      className=" my-4 w-full py-2  focus:ring-1"
       placeholder={t("searchMovie")}
       prefix={<Search />}
       ref={inputElement}

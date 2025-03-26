@@ -32,7 +32,7 @@
   },
   "routes": {
     "movies": "Home",
-    "favouriteMovies": "Favourites"
+    "favoriteMovies": "Favorites"
   },
   "removeItemConfirmation": {
     "title": "Remove from history?",
@@ -40,7 +40,7 @@
     "button": "Yes, remove all"
   },
   "removeAllConfirmation": {
-    "title": "Remove all moives from history?",
+    "title": "Remove all movies from history?",
     "message": "You are removing all movies from the history. Do you want to continue?",
     "button": "Yes, remove"
   },
