@@ -33,7 +33,6 @@ const MovieHistoryItems = forwardRef(({ activeId, movie = {} }, ref) => {
         {title}
       </Typography>
       <Button
-        className="text-red-500 hover:text-white"
         icon={Delete}
         iconSize={30}
         style="tertiary"

@@ -7,13 +7,13 @@ import useFavoriteMoviesStore from "stores/useFavoriteMovieStore";
 
 import FavoriteMovieItem from "./Items";
 
-const FavouriteMovie = () => {
+const FavoriteMovie = () => {
   const { favoriteMoviesList = [] } = useFavoriteMoviesStore();
   const { t } = useTranslation();
 
   return isEmpty(favoriteMoviesList) ? (
     <NoData
-      className="flex  w-full items-center justify-center"
+      className="movie-list-view-history-container-height flex  w-full items-center justify-center"
       title={t("noFavoriteMovie")}
     />
   ) : (
@@ -25,4 +25,4 @@ const FavouriteMovie = () => {
   );
 };
 
-export default FavouriteMovie;
+export default FavoriteMovie;
