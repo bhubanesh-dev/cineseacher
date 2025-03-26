@@ -33,7 +33,7 @@ const MovieListItem = ({ title, year, poster, imdbID }) => {
         {t("year", { year })}
       </Typography>
       <Button
-        className="my-2  w-32 bg-gray-100 font-bold text-blue-500"
+        className="view-details my-2  w-32 bg-gray-100 font-bold text-blue-500"
         label={t("viewDetails")}
         size="medium"
         style="text"

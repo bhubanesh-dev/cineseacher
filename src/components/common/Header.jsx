@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Typography } from "neetoui";
 import { Trans } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
-import routes from "src/route";
+import routes from "src/routes";
 
 const Header = () => {
   const location = useLocation();
@@ -23,7 +23,7 @@ const Header = () => {
       <nav className="ml-6 flex gap-4">
         {[
           { path: routes.movies, key: "routes.movies" },
-          { path: routes.favouriteMovie, key: "routes.favouriteMovies" },
+          { path: routes.favoriteMovie, key: "routes.favoriteMovies" },
         ].map(({ path, key }) => (
           <Link
             key={key}
