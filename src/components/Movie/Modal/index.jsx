@@ -1,3 +1,5 @@
+import { FALLBACK_IMAGE } from "constants";
+
 import React from "react";
 
 import { ErrorPage } from "components/common";
@@ -72,7 +74,12 @@ const MovieModalView = ({ showModal, id, onClose }) => {
       </Header>
       <Body>
         <div className="my-2 grid grid-flow-row grid-cols-1 gap-4 md:grid-cols-2">
-          <img alt={title} className="h-96 w-72 rounded-lg" src={posterImg} />
+          <img
+            alt={title}
+            className="h-96 w-72 rounded-lg"
+            src={posterImg}
+            onError={e => (e.target.src = FALLBACK_IMAGE)}
+          />
           <div className="flex flex-col space-y-2">
             <Typography
               className="mb-2 italic text-gray-500"
