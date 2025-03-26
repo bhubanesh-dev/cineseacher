@@ -42,7 +42,7 @@ const useMovieViewStore = create(
             if (updatedMovieList.length > 0) {
               newActiveID = updatedMovieList[0].imdbID;
             } else {
-              newActiveID = null;
+              newActiveID = state.getCurrentActiveMovieID;
             }
           }
 
