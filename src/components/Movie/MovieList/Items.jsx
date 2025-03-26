@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
 import useMovieViewStore from "stores/useMovieViewStore";
+import { setFallbackImage } from "utils/setFallbackImage";
 
 import MovieModalView from "../Modal";
 
@@ -23,7 +24,7 @@ const MovieListItem = ({ title, year, poster, imdbID, type }) => {
         <img
           alt={title}
           className="h-44 w-44 object-contain"
-          src={poster === "N/A" ? t("fallbackImg") : poster}
+          src={setFallbackImage(poster)}
         />
       </div>
       <Typography className="mb-2 text-lg font-bold leading-5 text-gray-900">

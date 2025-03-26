@@ -13,7 +13,7 @@ const FavouriteMovie = () => {
 
   return isEmpty(favoriteMoviesList) ? (
     <NoData
-      className="flex  w-full items-center justify-center"
+      className="movie-list-view-history-container-height flex  w-full items-center justify-center"
       title={t("noFavoriteMovie")}
     />
   ) : (
