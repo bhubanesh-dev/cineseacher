@@ -7,7 +7,7 @@ import useFavoriteMoviesStore from "stores/useFavoriteMovieStore";
 
 import FavoriteMovieItem from "./Items";
 
-const FavoriteMovie = () => {
+const Favorite = () => {
   const { favoriteMoviesList = [] } = useFavoriteMoviesStore();
   const { t } = useTranslation();
 
@@ -19,10 +19,10 @@ const FavoriteMovie = () => {
   ) : (
     <section className="mt-6 flex h-4/5 flex-col items-center gap-4 overflow-y-scroll">
       {favoriteMoviesList.map(it => (
-        <FavoriteMovieItem {...it} key={it.imdbID} />
+        <FavoriteMovieItem key={it.imdbID} {...it} />
       ))}
     </section>
   );
 };
 
-export default FavoriteMovie;
+export default Favorite;

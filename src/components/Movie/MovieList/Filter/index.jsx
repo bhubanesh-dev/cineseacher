@@ -17,8 +17,11 @@ const FilterParameters = ({
   updateQueryParams,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const buttonRef = useRef(null);
+
   const popoverRef = useRef(null);
+
   const { t } = useTranslation();
 
   const formik = useFormik({
@@ -50,6 +53,7 @@ const FilterParameters = ({
     applyFilter();
   }, [formik.values]);
 
+  // Only checks for movie or series toggle types
   const handleTypeChange = selectedType => {
     const { movie, series } = formik.values.types;
 
@@ -74,6 +78,7 @@ const FilterParameters = ({
     });
   };
 
+  // Handle auto hide popover on clicking outside
   useEffect(() => {
     const handleClickOutside = event => {
       if (

@@ -8,6 +8,10 @@ import routes from "src/routes";
 
 const Header = () => {
   const location = useLocation();
+  const NavigationRoutes = [
+    { path: routes.movies, key: "routes.movies" },
+    { path: routes.favoriteMovie, key: "routes.favoriteMovies" },
+  ];
 
   return (
     <header className="borer-b-2 flex h-auto items-center px-16 py-4 shadow-md">
@@ -21,10 +25,7 @@ const Header = () => {
         />
       </Typography>
       <nav className="ml-6 flex gap-4">
-        {[
-          { path: routes.movies, key: "routes.movies" },
-          { path: routes.favoriteMovie, key: "routes.favoriteMovies" },
-        ].map(({ path, key }) => (
+        {NavigationRoutes.map(({ path, key }) => (
           <Link
             key={key}
             to={path}
