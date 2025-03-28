@@ -78,7 +78,7 @@ const MovieModalView = ({ showModal, id, onClose }) => {
             alt={title}
             className="h-96 w-72 rounded-lg"
             src={posterImg}
-            onError={e => (e.target.src = FALLBACK_IMAGE)}
+            onError={event => (event.target.src = FALLBACK_IMAGE)}
           />
           <div className="flex flex-col space-y-2">
             <Typography

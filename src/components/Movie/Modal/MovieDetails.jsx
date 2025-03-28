@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const MovieDetails = ({ movie }) => {
   const { t } = useTranslation();
+
   const details = useMemo(
     () => [
       { label: t("movieDetails.director"), value: movie.director || "N/A" },

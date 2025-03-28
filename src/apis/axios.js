@@ -25,7 +25,7 @@ const responseInterceptors = () => {
     response => {
       if (response.data) response.data = convertKeysToCamelCase(response.data);
 
-      checkForGettingErrorInResposne(response); // Check: if in the resposne getting some error as per api response
+      checkForGettingErrorInResposne(response); // Check: if in the response getting some error as per api response
 
       return response.data;
     },

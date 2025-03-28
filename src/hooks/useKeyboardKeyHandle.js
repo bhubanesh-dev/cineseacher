@@ -2,9 +2,9 @@ import { useEffect } from "react";
 
 const useKeyboardKeyHandle = (key, callback) => {
   useEffect(() => {
-    const handleKeyDown = e => {
-      if (e.key === key) {
-        e.preventDefault();
+    const handleKeyDown = event => {
+      if (event.key === key) {
+        event.preventDefault();
         callback();
       }
     };
