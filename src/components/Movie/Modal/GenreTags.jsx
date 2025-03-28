@@ -1,11 +1,11 @@
 import { Tag } from "neetoui";
 
-import genresCollection from "./utils/genresCollection";
+import formatGenresCollection from "./utils/formatGenresCollection";
 
 const GenreTags = ({ genre }) => {
   if (!genre) return null;
 
-  const tags = genresCollection(genre); //generate genres collection
+  const tags = formatGenresCollection(genre);
 
   return (
     <div className="flex flex-wrap gap-2">

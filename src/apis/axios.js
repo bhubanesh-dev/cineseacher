@@ -5,7 +5,7 @@ import { t } from "i18next";
 import { Toastr } from "neetoui";
 import { convertKeysToCamelCase } from "utils/convertKeysToCamelCase";
 
-const checkForGettingErrorInResposne = response => {
+const checkForGettingErrorInResponse = response => {
   if (response.data?.response === "False") {
     Toastr.error(response.data.error, { autoClose: AUTO_HIDE_TOAST_DURATION });
   }
@@ -25,7 +25,7 @@ const responseInterceptors = () => {
     response => {
       if (response.data) response.data = convertKeysToCamelCase(response.data);
 
-      checkForGettingErrorInResposne(response); // Check: if in the response getting some error as per api response
+      checkForGettingErrorInResponse(response); // Check: if in the response getting some error as per api response
 
       return response.data;
     },
@@ -37,16 +37,8 @@ const responseInterceptors = () => {
   );
 };
 
-const setHttpHeaders = () => {
-  axios.defaults.headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  };
-};
-
 export default function initializeAxios() {
   axios.defaults.baseURL = ODMB_API_URL;
   axios.defaults.params = { apikey: ODMB_KEY };
-  setHttpHeaders();
   responseInterceptors();
 }
