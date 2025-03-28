@@ -10,6 +10,7 @@
   "noFavoriteMovie": "Your favorite movie collection is empty.",
   "addToFavorite": "Add to favorites",
   "removeFromFavorite": "Remove from favorites",
+  "nothing": "N/A",
   "movieDetails": {
     "viewMore": "View more",
     "director": "Director",
@@ -29,6 +30,9 @@
     "movies": "Home",
     "favoriteMovies": "Favorites"
   },
+  "favoriteMovie": {
+    "rating": "Rating"
+  },
   "removeItemConfirmation": {
     "title": "Remove from history?",
     "message": "You are removing <strong>{{title}}</strong> from history. Do you want to continue?",
@@ -46,5 +50,10 @@
     "movie": "Movie",
     "series": "Series",
     "invalidYear": "Invalid Year"
+  },
+
+  "pageNotFound": {
+    "title": "The page you're looking for can't be found",
+    "label": "Back to home"
   }
 }

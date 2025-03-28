@@ -1,15 +1,11 @@
 import React from "react";
 
-import { useTranslation } from "react-i18next";
+import { withT } from "utils/withT";
 
-const ErrorPage = () => {
-  const { t } = useTranslation();
+const ErrorPage = ({ t }) => (
+  <div className="flex h-screen w-full items-center justify-center">
+    {t("error.somethingWentWrong")}
+  </div>
+);
 
-  return (
-    <div className="flex h-screen w-full items-center justify-center">
-      {t("error.somethingWentWrong")}
-    </div>
-  );
-};
-
-export default ErrorPage;
+export default withT(ErrorPage);

@@ -6,6 +6,7 @@ import { ErrorPage } from "components/common";
 import { useShowMovie } from "hooks/reactQuery/useMoviesApi";
 import { Modal, Spinner, Typography } from "neetoui";
 import { any } from "ramda";
+import { useTranslation } from "react-i18next";
 import useFavoriteMoviesStore from "stores/useFavoriteMovieStore";
 import { setFallbackImage } from "utils/setFallbackImage";
 
@@ -16,15 +17,15 @@ import MovieDetails from "./MovieDetails";
 const MovieModalView = ({ showModal, id, onClose }) => {
   const { Header, Body } = Modal;
 
+  const { t } = useTranslation();
+
   const {
     data: movie = {},
     isLoading,
     isError,
   } = useShowMovie(id, { enabled: !!id && showModal });
 
-  const { title = "N/A", genre = "", poster, ...restMovieDetails } = movie;
-
-  const posterImg = setFallbackImage(poster);
+  const { title = t("nothing"), genre = "", poster } = movie;
 
   const { favoriteMoviesList, toggleFavMovies } = useFavoriteMoviesStore();
 
@@ -77,8 +78,8 @@ const MovieModalView = ({ showModal, id, onClose }) => {
           <img
             alt={title}
             className="h-96 w-72 rounded-lg"
-            src={posterImg}
-            onError={e => (e.target.src = FALLBACK_IMAGE)}
+            src={setFallbackImage(poster)}
+            onError={event => (event.target.src = FALLBACK_IMAGE)}
           />
           <div className="flex flex-col space-y-2">
             <Typography
@@ -86,9 +87,9 @@ const MovieModalView = ({ showModal, id, onClose }) => {
               style="h4"
               weight="medium"
             >
-              {movie.plot || "N/A"}
+              {movie.plot || t("nothing")}
             </Typography>
-            <MovieDetails movie={restMovieDetails} />
+            <MovieDetails movie={movie} />
           </div>
         </div>
       </Body>

@@ -56,9 +56,8 @@ const ViewMoviesHistory = () => {
         ) : (
           movieList.map(movie => (
             <MovieHistoryItems
-              activeId={activeId}
               key={movie.imdbID}
-              movie={movie}
+              {...{ activeId, movie }}
               ref={el => (itemRefs.current[movie.imdbID] = el)}
             />
           ))

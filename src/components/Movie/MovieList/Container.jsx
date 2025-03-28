@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import MovieListItem from "./Items";
 
-const MoviesContainer = ({
+const MoviesListContainer = ({
   movies,
   totalResults,
   page,
@@ -43,4 +43,4 @@ const MoviesContainer = ({
   );
 };
 
-export default MoviesContainer;
+export default MoviesListContainer;

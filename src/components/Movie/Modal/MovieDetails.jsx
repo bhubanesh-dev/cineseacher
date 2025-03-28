@@ -1,21 +1,24 @@
 import { useMemo } from "react";
 
 import { Typography } from "neetoui";
-import { useTranslation } from "react-i18next";
+
+import { formatMovieDetails } from "./utils/formatRestMovieDetails";
 
 const MovieDetails = ({ movie }) => {
-  const { t } = useTranslation();
+  const { director, actors, boxOffice, year, runTime, language, rated } = movie;
+  const movieDetails = {
+    director,
+    actors,
+    boxOffice,
+    year,
+    runTime,
+    language,
+    rated,
+  };
+
   const details = useMemo(
-    () => [
-      { label: t("movieDetails.director"), value: movie.director || "N/A" },
-      { label: t("movieDetails.actors"), value: movie.actors || "N/A" },
-      { label: t("movieDetails.boxOffice"), value: movie.boxOffice || "N/A" },
-      { label: t("movieDetails.year"), value: movie.year || "N/A" },
-      { label: t("movieDetails.runTime"), value: movie.runTime || "N/A" },
-      { label: t("movieDetails.language"), value: movie.language || "N/A" },
-      { label: t("movieDetails.rated"), value: movie.rated || "N/A" },
-    ],
-    [t, movie]
+    () => formatMovieDetails(movieDetails),
+    [movieDetails]
   );
 
   return details.map(({ label, value }) => (

@@ -4,14 +4,11 @@ import classNames from "classnames";
 import { Typography } from "neetoui";
 import { Trans } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
-import routes from "src/routes";
+
+import { NAVIGATION_ROUTES } from "./constants";
 
 const Header = () => {
   const location = useLocation();
-  const NavigationRoutes = [
-    { path: routes.movies, key: "routes.movies" },
-    { path: routes.favoriteMovie, key: "routes.favoriteMovies" },
-  ];
 
   return (
     <header className="borer-b-2 flex h-auto items-center px-16 py-4 shadow-md">
@@ -25,7 +22,7 @@ const Header = () => {
         />
       </Typography>
       <nav className="ml-6 flex gap-4">
-        {NavigationRoutes.map(({ path, key }) => (
+        {NAVIGATION_ROUTES.map(({ path, key }) => (
           <Link
             key={key}
             to={path}
