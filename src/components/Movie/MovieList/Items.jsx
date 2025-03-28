@@ -31,7 +31,7 @@ const MovieListItem = ({ title, year, poster, imdbID, type }) => {
         />
       </div>
       <Typography className="mb-2 text-lg font-bold leading-5 text-gray-900">
-        {t("title", { title })}
+        {title}
       </Typography>
       <Typography className="mb-2 text-sm font-medium text-gray-600">
         {type} • {year}
