@@ -1,7 +1,8 @@
+import dayjs from "dayjs";
 import i18n from "src/common/i18n";
 import * as Yup from "yup";
 
-const maxYear = new Date().getFullYear();
+const maxYear = dayjs().format("{YYYY}");
 
 export const VALIDATION_SCHEMA = Yup.object().shape({
   year: Yup.string()
