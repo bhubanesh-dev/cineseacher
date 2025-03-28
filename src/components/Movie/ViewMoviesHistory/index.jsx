@@ -41,6 +41,7 @@ const ViewMoviesHistory = () => {
         </Typography>
         <Button
           className="hover:pointer text-red-500"
+          disabled={isEmpty(movieList)}
           iconSize={30}
           label={t("clearAll")}
           style="tertiary"
