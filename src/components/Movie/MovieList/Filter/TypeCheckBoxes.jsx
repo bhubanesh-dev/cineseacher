@@ -1,4 +1,5 @@
 import { Label, Checkbox } from "neetoui";
+import { withT } from "utils/withT";
 
 const TypeCheckboxes = ({ formik, handleTypeChange, t }) => (
   <>
@@ -20,4 +21,4 @@ const TypeCheckboxes = ({ formik, handleTypeChange, t }) => (
   </>
 );
 
-export default TypeCheckboxes;
+export default withT(TypeCheckboxes);

@@ -3,7 +3,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { Filter as filterIcon } from "neetoicons";
 import { Button, Popover } from "neetoui";
-import { useTranslation } from "react-i18next";
 
 import TypeCheckboxes from "./TypeCheckBoxes";
 import YearInput from "./YearInput";
@@ -21,8 +20,6 @@ const FilterParameters = ({
   const buttonRef = useRef(null);
 
   const popoverRef = useRef(null);
-
-  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -114,11 +111,7 @@ const FilterParameters = ({
       >
         <div className="w-64 p-4" ref={popoverRef}>
           <YearInput formik={formik} />
-          <TypeCheckboxes
-            formik={formik}
-            handleTypeChange={handleTypeChange}
-            t={t}
-          />
+          <TypeCheckboxes formik={formik} handleTypeChange={handleTypeChange} />
         </div>
       </Popover>
     </div>
