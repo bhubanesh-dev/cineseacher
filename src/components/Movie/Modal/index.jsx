@@ -17,15 +17,15 @@ import MovieDetails from "./MovieDetails";
 const MovieModalView = ({ showModal, id, onClose }) => {
   const { Header, Body } = Modal;
 
+  const { t } = useTranslation();
+
   const {
     data: movie = {},
     isLoading,
     isError,
   } = useShowMovie(id, { enabled: !!id && showModal });
 
-  const { title = "N/A", genre = "", poster } = movie;
-
-  const { t } = useTranslation();
+  const { title = t("nothing"), genre = "", poster } = movie;
 
   const { favoriteMoviesList, toggleFavMovies } = useFavoriteMoviesStore();
 
