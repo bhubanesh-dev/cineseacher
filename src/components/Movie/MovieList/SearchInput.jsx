@@ -20,7 +20,7 @@ const SearchInput = ({ searchQuery, setSearchQuery, updateQueryParams }) => {
       type="search"
       value={searchQuery}
       onChange={({ target: { value } }) => {
-        updateQueryParams({ s: value });
+        updateQueryParams({ searchTerm: value });
         setSearchQuery(value);
       }}
     />
