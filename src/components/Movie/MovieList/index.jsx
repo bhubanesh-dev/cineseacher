@@ -17,15 +17,15 @@ import SearchInput from "./SearchInput";
 
 const MovieList = () => {
   const queryParams = useQueryParams();
-  const { page, pageSize, s = "", year = 0, type = "" } = queryParams;
+  const { page, pageSize, searchTerm = "", year = 0, type = "" } = queryParams;
 
-  const [searchQuery, setSearchQuery] = useState(s);
+  const [searchQuery, setSearchQuery] = useState(searchTerm);
   const [filterQuery, setFilterQuery] = useState({ year, type });
 
   const history = useHistory();
 
   const moviesParams = {
-    s,
+    s: searchTerm,
     page: Number(page) || DEFAULT_PAGE_INDEX,
     pageSize: Number(pageSize) || DEFAULT_PAGE_SIZE,
     y: Number(year) || null,
@@ -39,12 +39,12 @@ const MovieList = () => {
   const updateQueryParams = useFuncDebounce(
     useCallback(
       query => {
-        const { s, year, type } = query || {};
-        const isSearchFilled = !isEmpty(s);
+        const { searchTerm, year, type } = query || {};
+        const isSearchFilled = !isEmpty(searchTerm);
 
         const params = {
           page: isSearchFilled ? DEFAULT_PAGE_INDEX : null,
-          s: isSearchFilled ? s : null,
+          searchTerm: isSearchFilled ? searchTerm : null,
           year: isSearchFilled ? year : null,
           type: isSearchFilled ? type : null,
         };
@@ -60,7 +60,7 @@ const MovieList = () => {
     isLoading,
     isFetching,
     isError,
-  } = useFetchMovies(moviesParams, { enabled: !!moviesParams.s });
+  } = useFetchMovies(moviesParams);
 
   const { search: movies = [], totalResults = 0 } = data;
 

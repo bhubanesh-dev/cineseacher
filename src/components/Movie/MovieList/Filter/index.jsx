@@ -39,10 +39,11 @@ const FilterParameters = ({
 
       if (Object.keys(errors).length === 0) {
         setFilterQuery({ year: formik.values.year, type: formik.values.type });
+        console.log(formik.values);
         updateQueryParams({
           year: formik.values.year,
           type: formik.values.type,
-          s: searchQuery || null,
+          searchTerm: searchQuery || null,
         });
       }
     };
