@@ -33,7 +33,7 @@ const MovieListItem = ({ title, year, poster, imdbID, type }) => {
       <Typography className="mb-2 text-lg font-bold leading-5 text-gray-900">
         {title}
       </Typography>
-      <Typography className="mb-2 text-sm font-medium text-gray-600">
+      <Typography className="mb-2 text-sm font-medium capitalize text-gray-600">
         {type} • {year}
       </Typography>
       <Button
