@@ -8,7 +8,5 @@ export const formatMovieDetails = movie => {
     value: value || t("nothing"),
   }));
 
-  console.log(data);
-
   return data;
 };

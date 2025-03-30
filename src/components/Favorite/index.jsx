@@ -8,7 +8,8 @@ import useFavoriteMoviesStore from "stores/useFavoriteMovieStore";
 import FavoriteMovieItem from "./Items";
 
 const Favorite = () => {
-  const { favoriteMoviesList = [] } = useFavoriteMoviesStore();
+  const favoriteMoviesList = useFavoriteMoviesStore.pickFrom();
+
   const { t } = useTranslation();
 
   return isEmpty(favoriteMoviesList) ? (
