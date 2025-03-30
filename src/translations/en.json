@@ -36,12 +36,12 @@
   "removeItemConfirmation": {
     "title": "Remove from history?",
     "message": "You are removing <strong>{{title}}</strong> from history. Do you want to continue?",
-    "button": "Yes, remove all"
+    "button": "Yes, remove"
   },
   "removeAllConfirmation": {
     "title": "Remove all movies from history?",
     "message": "You are removing all movies from the history. Do you want to continue?",
-    "button": "Yes, remove"
+    "button": "Yes, remove all"
   },
   "filterParameters": {
     "year": "Year",
