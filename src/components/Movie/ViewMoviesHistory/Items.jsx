@@ -9,7 +9,7 @@ import useMovieViewStore from "stores/useMovieViewStore";
 const MovieHistoryItems = forwardRef(({ activeId, movie = {} }, ref) => {
   const { imdbID, title } = movie;
 
-  const { removeMovies } = useMovieViewStore();
+  const { removeMovies } = useMovieViewStore.pick();
 
   const { t } = useTranslation();
 

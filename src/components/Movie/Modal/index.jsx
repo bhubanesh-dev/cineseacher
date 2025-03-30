@@ -27,7 +27,7 @@ const MovieModalView = ({ showModal, id, onClose }) => {
 
   const { title = t("nothing"), genre = "", poster } = movie;
 
-  const { favoriteMoviesList, toggleFavMovies } = useFavoriteMoviesStore();
+  const { favoriteMoviesList, toggleFavMovies } = useFavoriteMoviesStore.pick();
 
   const isFavorite = any(item => item.imdbID === id, favoriteMoviesList);
 

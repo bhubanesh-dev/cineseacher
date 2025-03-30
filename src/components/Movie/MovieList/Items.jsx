@@ -13,7 +13,7 @@ const MovieListItem = ({ title, year, poster, imdbID, type }) => {
   const [showModal, setShowModal] = useState(false);
   const { t } = useTranslation();
 
-  const { addMovies } = useMovieViewStore();
+  const { addMovies } = useMovieViewStore.pick();
 
   const handleMovieDetailsView = () => {
     setShowModal(true);

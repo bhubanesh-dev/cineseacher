@@ -11,7 +11,7 @@ const ViewMoviesHistory = () => {
   const { t } = useTranslation();
 
   const { movieList, getCurrentActiveID, deleteAllMoviesHistory } =
-    useMovieViewStore();
+    useMovieViewStore.pick();
 
   const activeId = getCurrentActiveID();
 
