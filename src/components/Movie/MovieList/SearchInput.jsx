@@ -3,10 +3,9 @@ import { useRef } from "react";
 import useKeyboardKeyHandle from "hooks/useKeyboardKeyHandle";
 import { Search } from "neetoicons";
 import { Input } from "neetoui";
-import { useTranslation } from "react-i18next";
+import { withT } from "utils/withT";
 
-const SearchInput = ({ searchQuery, setSearchQuery, updateQueryParams }) => {
-  const { t } = useTranslation();
+const SearchInput = ({ searchQuery, setSearchQuery, updateQueryParams, t }) => {
   const inputElement = useRef(null);
 
   useKeyboardKeyHandle("/", () => inputElement.current?.focus());
@@ -27,4 +26,4 @@ const SearchInput = ({ searchQuery, setSearchQuery, updateQueryParams }) => {
   );
 };
 
-export default SearchInput;
+export default withT(SearchInput);

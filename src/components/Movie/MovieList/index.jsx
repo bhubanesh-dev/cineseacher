@@ -17,7 +17,7 @@ import SearchInput from "./SearchInput";
 
 const MovieList = () => {
   const queryParams = useQueryParams();
-  const { page, pageSize, searchTerm = "", year = 0, type = "" } = queryParams;
+  const { page, pageSize, searchTerm = "", year = "", type = "" } = queryParams;
 
   const [searchQuery, setSearchQuery] = useState(searchTerm);
   const [filterQuery, setFilterQuery] = useState({ year, type });

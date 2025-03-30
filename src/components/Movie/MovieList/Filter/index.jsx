@@ -1,122 +1,116 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import { useFormik } from "formik";
-import { Filter as filterIcon } from "neetoicons";
-import { Button, Popover } from "neetoui";
+import { Formik } from "formik";
+import { Close, Filter as FilterIcon } from "neetoicons";
+import { Button, Dropdown } from "neetoui";
 
+import { VALIDATION_SCHEMA } from "./constants";
 import TypeCheckboxes from "./TypeCheckBoxes";
 import YearInput from "./YearInput";
 
-import { VALIDATION_SCHEMA } from "../utils/validation";
-
-const FilterParameters = ({
+const Filter = ({
   searchQuery,
   filterQuery,
   setFilterQuery,
   updateQueryParams,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { year, type } = filterQuery;
 
-  const buttonRef = useRef(null);
+  const INITIAL_VALUE = {
+    year,
+    type,
+    movie: !type || type === "movie",
+    series: !type || type === "series",
+  };
 
-  const popoverRef = useRef(null);
+  const handleTypeChange = (type, setFieldValue, values) => {
+    const newValue = !values[type];
+    setFieldValue(type, newValue);
 
-  const formik = useFormik({
-    initialValues: {
-      year: filterQuery?.year || null,
-      type: filterQuery?.type || null,
-      types: {
-        movie: filterQuery?.type === "movie",
-        series: filterQuery?.type === "series",
-      },
-    },
-    validationSchema: VALIDATION_SCHEMA,
-  });
+    const updatedValues = { ...values, [type]: newValue };
 
-  useEffect(() => {
-    const applyFilter = async () => {
-      const errors = await formik.validateForm();
-
-      if (Object.keys(errors).length === 0) {
-        setFilterQuery({ year: formik.values.year, type: formik.values.type });
-        console.log(formik.values);
-        updateQueryParams({
-          year: formik.values.year,
-          type: formik.values.type,
-          searchTerm: searchQuery || null,
-        });
-      }
-    };
-
-    applyFilter();
-  }, [formik.values]);
-
-  // Only checks for movie or series toggle types
-  const handleTypeChange = selectedType => {
-    const { movie, series } = formik.values.types;
-
-    let updatedTypes = {
-      movie: selectedType === "movie" ? !movie : false,
-      series: selectedType === "series" ? !series : false,
-    };
-
-    if (!updatedTypes.movie && !updatedTypes.series) {
-      updatedTypes = { movie: false, series: false };
+    if (
+      (updatedValues.movie && updatedValues.series) ||
+      (!updatedValues.movie && !updatedValues.series)
+    ) {
+      updateFilterQuery(undefined, "");
+    } else if (updatedValues.movie) {
+      updateFilterQuery(undefined, "movie");
+    } else {
+      updateFilterQuery(undefined, "series");
     }
+  };
 
-    let newType = null;
-    if (updatedTypes.movie) newType = "movie";
+  const handleYearChange = async (year, setFieldValue) => {
+    setFieldValue("year", year);
+    updateFilterQuery(year);
+  };
 
-    if (updatedTypes.series) newType = "series";
+  const updateFilterQuery = (year, type) => {
+    const finalYear = year !== undefined ? year : filterQuery.year;
+    const finalType = type !== undefined ? type : filterQuery.type;
 
-    formik.setValues({
-      ...formik.values,
-      types: updatedTypes,
-      type: newType,
+    setFilterQuery({ year: finalYear, type: finalType });
+    updateQueryParams({
+      searchTerm: searchQuery,
+      year: finalYear !== "" ? finalYear : null,
+      type: finalType !== "" ? finalType : null,
     });
   };
 
-  // Handle auto hide popover on clicking outside
-  useEffect(() => {
-    const handleClickOutside = event => {
-      if (
-        popoverRef.current &&
-        !popoverRef.current.contains(event.target) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpen]);
-
   return (
     <div className="flex items-center justify-center">
-      <Button
-        icon={filterIcon}
-        ref={buttonRef}
-        style="tertiary"
-        onClick={() => setIsOpen(!isOpen)}
-      />
-      <Popover
-        position="bottom-end"
-        reference={buttonRef}
-        theme="light"
-        visible={isOpen}
+      <Dropdown
+        closeOnSelect={false}
+        isOpen={isOpen}
+        customTarget={
+          <Button
+            icon={FilterIcon}
+            style="text"
+            onClick={() => setIsOpen(true)}
+          />
+        }
+        onClickOutside={() => setIsOpen(false)}
+        onClose={() => setIsOpen(false)}
       >
-        <div className="w-64 p-4" ref={popoverRef}>
-          <YearInput formik={formik} />
-          <TypeCheckboxes formik={formik} handleTypeChange={handleTypeChange} />
+        <div className="w-64 p-6">
+          <div className="flex justify-end">
+            <Close
+              className="h-4 w-4 cursor-pointer"
+              onClick={() => setIsOpen(false)}
+            />
+          </div>
+          <Formik
+            initialValues={INITIAL_VALUE}
+            validationSchema={VALIDATION_SCHEMA}
+          >
+            {({ values, errors, setFieldValue, validateField }) => (
+              <form className="space-y-3">
+                <YearInput
+                  {...{
+                    values,
+                    errors,
+                    validateField,
+                    setFieldValue,
+                    handleYearChange: year =>
+                      handleYearChange(year, setFieldValue, errors),
+                  }}
+                />
+                <TypeCheckboxes
+                  {...{
+                    values,
+                    handleTypeChange: type =>
+                      handleTypeChange(type, setFieldValue, values),
+                  }}
+                />
+              </form>
+            )}
+          </Formik>
         </div>
-      </Popover>
+      </Dropdown>
     </div>
   );
 };
 
-export default FilterParameters;
+export default Filter;
