@@ -10,12 +10,10 @@ import MovieHistoryItems from "./Items";
 const ViewMoviesHistory = () => {
   const { t } = useTranslation();
 
-  const { movieList, getCurrentActiveID, deleteAllMoviesHistory } =
+  const { movieList, getCurrentActiveMovieID, deleteAllMoviesHistory } =
     useMovieViewStore.pick();
 
-  const activeId = getCurrentActiveID();
-
-  const itemRefs = useRef({});
+  const itemRefs = useRef([]);
 
   const [shouldShowDeleteAlert, setShouldShowDeleteAlert] = useState(false);
 
@@ -25,13 +23,13 @@ const ViewMoviesHistory = () => {
   };
 
   useEffect(() => {
-    if (activeId && itemRefs.current[activeId]) {
-      itemRefs.current[activeId].scrollIntoView({
+    if (getCurrentActiveMovieID && itemRefs.current[getCurrentActiveMovieID]) {
+      itemRefs.current[getCurrentActiveMovieID].scrollIntoView({
         behavior: "smooth",
         block: "nearest",
       });
     }
-  }, [activeId]);
+  }, [getCurrentActiveMovieID]);
 
   return (
     <section className="flex h-screen w-1/4 flex-col border-l-2 py-2 shadow-lg">
@@ -58,8 +56,8 @@ const ViewMoviesHistory = () => {
           movieList.map(movie => (
             <MovieHistoryItems
               key={movie.imdbID}
-              {...{ activeId, movie }}
-              ref={el => (itemRefs.current[movie.imdbID] = el)}
+              {...movie}
+              ref={element => (itemRefs.current[movie.imdbID] = element)}
             />
           ))
         )}

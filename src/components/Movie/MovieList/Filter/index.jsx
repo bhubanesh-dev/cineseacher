@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { Close, Filter as FilterIcon } from "neetoicons";
 import { Button, Dropdown } from "neetoui";
 
-import { VALIDATION_SCHEMA } from "./constants";
+import { MAX_YEAR, MIN_YEAR, VALIDATION_SCHEMA } from "./constants";
 import TypeCheckboxes from "./TypeCheckBoxes";
 import YearInput from "./YearInput";
 
@@ -34,28 +34,30 @@ const Filter = ({
       (updatedValues.movie && updatedValues.series) ||
       (!updatedValues.movie && !updatedValues.series)
     ) {
-      updateFilterQuery(undefined, "");
+      updateFilterQuery({ type: "" });
     } else if (updatedValues.movie) {
-      updateFilterQuery(undefined, "movie");
+      updateFilterQuery({ type: "movie" });
     } else {
-      updateFilterQuery(undefined, "series");
+      updateFilterQuery({ type: "series" });
     }
   };
 
   const handleYearChange = async (year, setFieldValue) => {
     setFieldValue("year", year);
-    updateFilterQuery(year);
+    if (Number(year) >= MIN_YEAR && Number(year) <= MAX_YEAR) {
+      updateFilterQuery({ year });
+    }
   };
 
-  const updateFilterQuery = (year, type) => {
-    const finalYear = year !== undefined ? year : filterQuery.year;
-    const finalType = type !== undefined ? type : filterQuery.type;
-
-    setFilterQuery({ year: finalYear, type: finalType });
+  const updateFilterQuery = ({
+    year = filterQuery.year,
+    type = filterQuery.type,
+  } = {}) => {
+    setFilterQuery({ year, type });
     updateQueryParams({
       searchTerm: searchQuery,
-      year: finalYear !== "" ? finalYear : null,
-      type: finalType !== "" ? finalType : null,
+      year: year !== "" ? year : null,
+      type: type !== "" ? type : null,
     });
   };
 
@@ -82,6 +84,7 @@ const Filter = ({
             />
           </div>
           <Formik
+            enableReinitialize
             initialValues={INITIAL_VALUE}
             validationSchema={VALIDATION_SCHEMA}
           >

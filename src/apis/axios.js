@@ -1,4 +1,4 @@
-import { ODMB_KEY, ODMB_API_URL, AUTO_HIDE_TOAST_DURATION } from "constants";
+import { OMDB_KEY, OMDB_API_URL, AUTO_HIDE_TOAST_DURATION } from "constants";
 
 import axios from "axios";
 import { t } from "i18next";
@@ -25,7 +25,7 @@ const responseInterceptors = () => {
     response => {
       if (response.data) response.data = convertKeysToCamelCase(response.data);
 
-      checkForGettingErrorInResponse(response); // Check: if in the response getting some error as per api response
+      checkForGettingErrorInResponse(response);
 
       return response.data;
     },
@@ -38,7 +38,7 @@ const responseInterceptors = () => {
 };
 
 export default function initializeAxios() {
-  axios.defaults.baseURL = ODMB_API_URL;
-  axios.defaults.params = { apikey: ODMB_KEY };
+  axios.defaults.baseURL = OMDB_API_URL;
+  axios.defaults.params = { apikey: OMDB_KEY };
   responseInterceptors();
 }

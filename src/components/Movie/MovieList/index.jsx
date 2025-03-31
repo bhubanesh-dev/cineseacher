@@ -9,6 +9,7 @@ import useQueryParams from "hooks/useQueryParams";
 import { filterNonNull } from "neetocist";
 import { isEmpty, mergeLeft } from "ramda";
 import { useHistory } from "react-router-dom";
+import routes from "routes";
 import { buildUrl } from "utils/url";
 
 import MovieListContainer from "./Container";
@@ -33,7 +34,7 @@ const MovieList = () => {
   };
 
   const handlePageNavigation = page => {
-    history.replace(buildUrl("/movies", mergeLeft({ page }, queryParams)));
+    history.replace(buildUrl(routes.movies, mergeLeft({ page }, queryParams)));
   };
 
   const updateQueryParams = useFuncDebounce(
@@ -49,7 +50,7 @@ const MovieList = () => {
           type: isSearchFilled ? type : null,
         };
 
-        history.replace(buildUrl("/movies", filterNonNull(params)));
+        history.replace(buildUrl(routes.movies, filterNonNull(params)));
       },
       [history]
     )

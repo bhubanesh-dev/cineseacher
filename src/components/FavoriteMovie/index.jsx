@@ -7,7 +7,7 @@ import useFavoriteMoviesStore from "stores/useFavoriteMovieStore";
 
 import FavoriteMovieItem from "./Items";
 
-const Favorite = () => {
+const FavoriteMovie = () => {
   const favoriteMoviesList = useFavoriteMoviesStore.pickFrom();
 
   const { t } = useTranslation();
@@ -26,4 +26,4 @@ const Favorite = () => {
   );
 };
 
-export default Favorite;
+export default FavoriteMovie;
