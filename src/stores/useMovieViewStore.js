@@ -1,5 +1,5 @@
 import { existsBy, removeBy } from "neetocist";
-import { assoc, isEmpty, pipe, prepend } from "ramda";
+import { assoc, pipe, prepend } from "ramda";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -7,7 +7,7 @@ const useMovieViewStore = create(
   persist(
     set => ({
       movieList: [],
-      getCurrentActiveMovieID: 0,
+      currentActiveMovieID: 0,
 
       addMovies: movie =>
         set(({ movieList }) => {
@@ -15,24 +15,25 @@ const useMovieViewStore = create(
 
           return {
             movieList: isMovieExist ? movieList : prepend(movie, movieList),
-            getCurrentActiveMovieID: movie.imdbID,
+            currentActiveMovieID: movie.imdbID,
           };
         }),
 
       removeMovies: id =>
-        set(state => {
-          const updatedMovieList = removeBy({ imdbID: id }, state.movieList);
+        set(({ movieList, currentActiveMovieID }) => {
+          const updatedMovieList = removeBy({ imdbID: id }, movieList);
 
           return {
             movieList: updatedMovieList,
-            getCurrentActiveMovieID: isEmpty(updatedMovieList)
-              ? updatedMovieList[0].imdbID
-              : 0,
+            currentActiveMovieID:
+              currentActiveMovieID === id
+                ? updatedMovieList[0].imdbID
+                : currentActiveMovieID,
           };
         }),
 
       deleteAllMoviesHistory: () =>
-        set(pipe(assoc("movieList", []), assoc("getCurrentActiveMovieID", 0))),
+        set(pipe(assoc("movieList", []), assoc("currentActiveMovieID", 0))),
     }),
     { name: "Movie_List" }
   )

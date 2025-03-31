@@ -10,7 +10,7 @@ import MovieHistoryItems from "./Items";
 const ViewMoviesHistory = () => {
   const { t } = useTranslation();
 
-  const { movieList, getCurrentActiveMovieID, deleteAllMoviesHistory } =
+  const { movieList, currentActiveMovieID, deleteAllMoviesHistory } =
     useMovieViewStore.pick();
 
   const [shouldShowDeleteAlert, setShouldShowDeleteAlert] = useState(false);
@@ -21,9 +21,9 @@ const ViewMoviesHistory = () => {
   };
 
   useEffect(() => {
-    if (getCurrentActiveMovieID) {
+    if (currentActiveMovieID) {
       const activeMovieElement = document.getElementById(
-        `movie-${getCurrentActiveMovieID}`
+        `movie-${currentActiveMovieID}`
       );
       if (activeMovieElement) {
         activeMovieElement.scrollIntoView({
@@ -32,7 +32,7 @@ const ViewMoviesHistory = () => {
         });
       }
     }
-  }, [getCurrentActiveMovieID]);
+  }, [currentActiveMovieID]);
 
   return (
     <section className="flex h-screen w-1/4 flex-col border-l-2 py-2 shadow-lg">
