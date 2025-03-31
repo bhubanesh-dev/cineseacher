@@ -2,7 +2,6 @@ import { FALLBACK_IMAGE } from "constants";
 
 import React from "react";
 
-import { ErrorPage } from "components/common";
 import { useShowMovie } from "hooks/reactQuery/useMoviesApi";
 import { Modal, Spinner, Typography } from "neetoui";
 import { any } from "ramda";
@@ -19,11 +18,9 @@ const MovieModalView = ({ showModal, id, onClose }) => {
 
   const { t } = useTranslation();
 
-  const {
-    data: movie = {},
-    isLoading,
-    isError,
-  } = useShowMovie(id, { enabled: !!id && showModal });
+  const { data: movie = {}, isLoading } = useShowMovie(id, {
+    enabled: !!id && showModal,
+  });
 
   const { title = t("nothing"), genre = "", poster } = movie;
 
@@ -45,14 +42,6 @@ const MovieModalView = ({ showModal, id, onClose }) => {
         <div className="flex h-96 items-center justify-center">
           <Spinner />
         </div>
-      </Modal>
-    );
-  }
-
-  if (isError) {
-    return (
-      <Modal isOpen={showModal} size="large" onClose={onClose}>
-        <ErrorPage />
       </Modal>
     );
   }

@@ -6,7 +6,7 @@ import { Typography, Alert, Button } from "neetoui";
 import { useTranslation, Trans } from "react-i18next";
 import useMovieViewStore from "stores/useMovieViewStore";
 
-const MovieHistoryItems = forwardRef(({ imdbID, title }, ref) => {
+const ViewMovieHistoryItems = forwardRef(({ imdbID, title }, ref) => {
   const { removeMovies, getCurrentActiveMovieID } = useMovieViewStore.pick();
 
   const activeId = getCurrentActiveMovieID;
@@ -53,6 +53,6 @@ const MovieHistoryItems = forwardRef(({ imdbID, title }, ref) => {
   );
 });
 
-MovieHistoryItems.displayName = "MovieHistoryItems";
+ViewMovieHistoryItems.displayName = "ViewMovieHistoryItems";
 
-export default MovieHistoryItems;
+export default ViewMovieHistoryItems;

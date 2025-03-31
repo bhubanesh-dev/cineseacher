@@ -33,7 +33,7 @@ const MoviesListContainer = ({
       </div>
       <div className="my-5 self-end">
         <Pagination
-          count={totalResults || totalResults}
+          count={totalResults}
           navigate={handlePageNavigation}
           pageNo={Number(page) || DEFAULT_PAGE_INDEX}
           pageSize={DEFAULT_PAGE_SIZE}

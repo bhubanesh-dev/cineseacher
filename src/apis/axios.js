@@ -1,9 +1,9 @@
-import { OMDB_KEY, OMDB_API_URL, AUTO_HIDE_TOAST_DURATION } from "constants";
-
 import axios from "axios";
 import { t } from "i18next";
 import { Toastr } from "neetoui";
 import { convertKeysToCamelCase } from "utils/convertKeysToCamelCase";
+
+import { OMDB_KEY, OMDB_API_URL, AUTO_HIDE_TOAST_DURATION } from "./constants";
 
 const checkForGettingErrorInResponse = response => {
   if (response.data?.response === "False") {

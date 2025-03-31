@@ -1,19 +1,17 @@
-import { assoc, pipe, prepend, reject, any } from "ramda";
+import { existsBy, removeBy } from "neetocist";
+import { assoc, isEmpty, pipe, prepend } from "ramda";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 const useMovieViewStore = create(
   persist(
-    (set, get) => ({
+    set => ({
       movieList: [],
       getCurrentActiveMovieID: 0,
 
       addMovies: movie =>
         set(({ movieList }) => {
-          const isMovieExist = any(
-            ({ imdbID }) => imdbID === movie.imdbID,
-            movieList
-          );
+          const isMovieExist = existsBy({ imdbID: movie.imdbID }, movieList);
 
           return {
             movieList: isMovieExist ? movieList : prepend(movie, movieList),
@@ -23,36 +21,15 @@ const useMovieViewStore = create(
 
       removeMovies: id =>
         set(state => {
-          const isMovieExist = any(
-            ({ imdbID }) => imdbID === id,
-            state.movieList
-          );
-          let updatedMovieList = state.movieList;
-
-          if (isMovieExist) {
-            updatedMovieList = reject(
-              ({ imdbID }) => imdbID === id,
-              state.movieList
-            );
-          }
-
-          let newActiveID = state.getCurrentActiveMovieID;
-
-          if (newActiveID === id) {
-            if (updatedMovieList.length > 0) {
-              newActiveID = updatedMovieList[0].imdbID;
-            } else {
-              newActiveID = state.getCurrentActiveMovieID;
-            }
-          }
+          const updatedMovieList = removeBy({ imdbID: id }, state.movieList);
 
           return {
             movieList: updatedMovieList,
-            getCurrentActiveMovieID: newActiveID,
+            getCurrentActiveMovieID: isEmpty(updatedMovieList)
+              ? updatedMovieList[0].imdbID
+              : 0,
           };
         }),
-
-      getCurrentActiveID: () => get().getCurrentActiveMovieID,
 
       deleteAllMoviesHistory: () =>
         set(pipe(assoc("movieList", []), assoc("getCurrentActiveMovieID", 0))),
