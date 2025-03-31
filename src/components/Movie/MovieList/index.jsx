@@ -2,7 +2,7 @@ import { DEFAULT_PAGE_INDEX } from "constants";
 
 import React, { useState, useCallback } from "react";
 
-import { PageLoader, ErrorPage } from "components/common/";
+import { PageLoader } from "components/common/";
 import { useFetchMovies } from "hooks/reactQuery/useMoviesApi";
 import useFuncDebounce from "hooks/useFuncDebounce";
 import useQueryParams from "hooks/useQueryParams";
@@ -55,12 +55,7 @@ const MovieList = () => {
     )
   );
 
-  const {
-    data = {},
-    isLoading,
-    isFetching,
-    isError,
-  } = useFetchMovies(moviesParams);
+  const { data = {}, isLoading, isFetching } = useFetchMovies(moviesParams);
 
   const { search: movies = [], totalResults = 0 } = data;
 
@@ -76,7 +71,6 @@ const MovieList = () => {
           />
         )}
       </div>
-      {isError && <ErrorPage />}
       {isLoading || isFetching ? (
         <PageLoader />
       ) : (
