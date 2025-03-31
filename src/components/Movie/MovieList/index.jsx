@@ -18,7 +18,13 @@ import SearchInput from "./SearchInput";
 
 const MovieList = () => {
   const queryParams = useQueryParams();
-  const { page, pageSize, searchTerm = "", year = "", type = "" } = queryParams;
+  const {
+    page,
+    pageSize,
+    searchTerm = "",
+    year = null,
+    type = null,
+  } = queryParams;
 
   const [searchQuery, setSearchQuery] = useState(searchTerm);
   const [filterQuery, setFilterQuery] = useState({ year, type });
@@ -68,7 +74,9 @@ const MovieList = () => {
   return (
     <section className="movie-list-view-history-container-height mt-4 flex w-3/4 flex-col px-16">
       <div className="flex flex-row items-center gap-4">
-        <SearchInput {...{ searchQuery, setSearchQuery, updateQueryParams }} />
+        <SearchInput
+          {...{ searchQuery, setSearchQuery, filterQuery, updateQueryParams }}
+        />
         {moviesParams.s && (
           <FilterParameters
             {...{ filterQuery, searchQuery, setFilterQuery, updateQueryParams }}

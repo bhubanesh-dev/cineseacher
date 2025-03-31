@@ -5,7 +5,13 @@ import { Search } from "neetoicons";
 import { Input } from "neetoui";
 import { withT } from "utils/withT";
 
-const SearchInput = ({ searchQuery, setSearchQuery, updateQueryParams, t }) => {
+const SearchInput = ({
+  searchQuery,
+  setSearchQuery,
+  filterQuery,
+  updateQueryParams,
+  t,
+}) => {
   const inputElement = useRef(null);
 
   useKeyboardKeyHandle("/", () => inputElement.current?.focus());
@@ -19,7 +25,7 @@ const SearchInput = ({ searchQuery, setSearchQuery, updateQueryParams, t }) => {
       type="search"
       value={searchQuery}
       onChange={({ target: { value } }) => {
-        updateQueryParams({ searchTerm: value });
+        updateQueryParams({ searchTerm: value, ...filterQuery });
         setSearchQuery(value);
       }}
     />
