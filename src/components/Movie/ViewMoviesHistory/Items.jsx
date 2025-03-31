@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { useState } from "react";
 
 import classNames from "classnames";
 import { Delete } from "neetoicons";
@@ -6,7 +6,7 @@ import { Typography, Alert, Button } from "neetoui";
 import { useTranslation, Trans } from "react-i18next";
 import useMovieViewStore from "stores/useMovieViewStore";
 
-const MovieHistoryItems = forwardRef(({ imdbID, title }, ref) => {
+const ViewMovieHistoryItems = ({ movie: { imdbID, title }, id }) => {
   const { removeMovies, getCurrentActiveMovieID } = useMovieViewStore.pick();
 
   const activeId = getCurrentActiveMovieID;
@@ -22,7 +22,7 @@ const MovieHistoryItems = forwardRef(({ imdbID, title }, ref) => {
 
   return (
     <div
-      ref={ref}
+      id={id}
       className={classNames(
         "mx-8 flex h-12 flex-row items-center justify-between rounded-xl border px-6 py-2 ",
         activeId === imdbID
@@ -44,15 +44,13 @@ const MovieHistoryItems = forwardRef(({ imdbID, title }, ref) => {
         submitButtonLabel={t("removeItemConfirmation.button")}
         title={t("removeItemConfirmation.title")}
         message={
-          <Trans i18nKey="removeItemConfirmation.message" values={{ title }} />
+          <Trans i18nKey="removeItemConfirmation.message" values={title} />
         }
         onClose={() => setShouldShowDeleteAlert(false)}
         onSubmit={handleOnAlertSubmit}
       />
     </div>
   );
-});
+};
 
-MovieHistoryItems.displayName = "MovieHistoryItems";
-
-export default MovieHistoryItems;
+export default ViewMovieHistoryItems;

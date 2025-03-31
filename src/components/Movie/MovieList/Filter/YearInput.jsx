@@ -8,6 +8,7 @@ const YearInput = ({ values, errors, handleYearChange, t }) => (
       label={t("filterParameters.year")}
       name="year"
       placeholder={t("filterParameters.inputYear")}
+      type="search"
       value={values.year}
       onChange={event => handleYearChange(event.target.value)}
     />

@@ -1,4 +1,4 @@
-import { DEFAULT_PAGE_SIZE, DEFAULT_PAGE_INDEX } from "constants";
+import { DEFAULT_PAGE_INDEX } from "constants";
 
 import React, { useState, useCallback } from "react";
 
@@ -18,13 +18,7 @@ import SearchInput from "./SearchInput";
 
 const MovieList = () => {
   const queryParams = useQueryParams();
-  const {
-    page,
-    pageSize,
-    searchTerm = "",
-    year = null,
-    type = null,
-  } = queryParams;
+  const { page, searchTerm = "", year = null, type = null } = queryParams;
 
   const [searchQuery, setSearchQuery] = useState(searchTerm);
   const [filterQuery, setFilterQuery] = useState({ year, type });
@@ -34,7 +28,6 @@ const MovieList = () => {
   const moviesParams = {
     s: searchTerm,
     page: Number(page) || DEFAULT_PAGE_INDEX,
-    pageSize: Number(pageSize) || DEFAULT_PAGE_SIZE,
     y: Number(year) || null,
     type: type || null,
   };

@@ -1,4 +1,5 @@
-import { reject, prepend, any } from "ramda";
+import { existsBy, removeBy } from "neetocist";
+import { prepend } from "ramda";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -8,17 +9,14 @@ const useFavoriteMoviesStore = create(
       favoriteMoviesList: [],
       toggleFavMovies: movie =>
         set(({ favoriteMoviesList }) => {
-          const isMovieInList = any(
-            ({ imdbID }) => imdbID === movie.imdbID,
+          const isMovieInList = existsBy(
+            { imdbID: movie.imdbID },
             favoriteMoviesList
           );
 
           return {
             favoriteMoviesList: isMovieInList
-              ? reject(
-                  ({ imdbID }) => imdbID === movie.imdbID,
-                  favoriteMoviesList
-                )
+              ? removeBy({ imdbID: movie.imdbID }, favoriteMoviesList)
               : prepend(movie, favoriteMoviesList),
           };
         }),
