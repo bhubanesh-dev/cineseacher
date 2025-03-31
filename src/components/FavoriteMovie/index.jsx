@@ -2,15 +2,13 @@ import React from "react";
 
 import { NoData } from "neetoui";
 import { isEmpty } from "ramda";
-import { useTranslation } from "react-i18next";
 import useFavoriteMoviesStore from "stores/useFavoriteMovieStore";
+import { withT } from "utils/withT";
 
 import FavoriteMovieItem from "./Items";
 
-const FavoriteMovie = () => {
+const FavoriteMovie = ({ t }) => {
   const favoriteMoviesList = useFavoriteMoviesStore.pickFrom();
-
-  const { t } = useTranslation();
 
   return isEmpty(favoriteMoviesList) ? (
     <NoData
@@ -26,4 +24,4 @@ const FavoriteMovie = () => {
   );
 };
 
-export default FavoriteMovie;
+export default withT(FavoriteMovie);

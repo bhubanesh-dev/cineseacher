@@ -18,9 +18,7 @@ const MovieModalView = ({ showModal, id, onClose }) => {
 
   const { t } = useTranslation();
 
-  const { data: movie = {}, isLoading } = useShowMovie(id, {
-    enabled: !!id && showModal,
-  });
+  const { data: movie = {}, isLoading } = useShowMovie(id);
 
   const { title = t("nothing"), genre = "", poster } = movie;
 
