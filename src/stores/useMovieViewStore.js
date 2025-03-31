@@ -23,12 +23,18 @@ const useMovieViewStore = create(
         set(({ movieList, currentActiveMovieID }) => {
           const updatedMovieList = removeBy({ imdbID: id }, movieList);
 
+          let newActiveID = currentActiveMovieID;
+
+          if (newActiveID === id) {
+            newActiveID =
+              updatedMovieList.length > 0
+                ? updatedMovieList[0].imdbID
+                : currentActiveMovieID;
+          }
+
           return {
             movieList: updatedMovieList,
-            currentActiveMovieID:
-              currentActiveMovieID === id
-                ? updatedMovieList[0].imdbID
-                : currentActiveMovieID,
+            currentActiveMovieID: newActiveID,
           };
         }),
 
