@@ -42,9 +42,11 @@ const Filter = ({
     }
   };
 
-  const handleYearChange = async (year, setFieldValue) => {
+  const handleYearChange = (year, setFieldValue) => {
     setFieldValue("year", year);
-    if (Number(year) >= MIN_YEAR && Number(year) <= MAX_YEAR) {
+    if (year === "") {
+      updateFilterQuery({ year });
+    } else if (Number(year) >= MIN_YEAR && Number(year) <= MAX_YEAR) {
       updateFilterQuery({ year });
     }
   };
@@ -84,7 +86,6 @@ const Filter = ({
             />
           </div>
           <Formik
-            enableReinitialize
             initialValues={INITIAL_VALUE}
             validationSchema={VALIDATION_SCHEMA}
           >
