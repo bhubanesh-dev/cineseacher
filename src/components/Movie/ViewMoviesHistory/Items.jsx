@@ -7,9 +7,7 @@ import { useTranslation, Trans } from "react-i18next";
 import useMovieViewStore from "stores/useMovieViewStore";
 
 const ViewMovieHistoryItems = ({ movie: { imdbID, title }, id }) => {
-  const { removeMovies, getCurrentActiveMovieID } = useMovieViewStore.pick();
-
-  const activeId = getCurrentActiveMovieID;
+  const { removeMovies, currentActiveMovieID } = useMovieViewStore.pick();
 
   const { t } = useTranslation();
 
@@ -25,7 +23,7 @@ const ViewMovieHistoryItems = ({ movie: { imdbID, title }, id }) => {
       id={id}
       className={classNames(
         "mx-8 flex h-12 flex-row items-center justify-between rounded-xl border px-6 py-2 ",
-        activeId === imdbID
+        currentActiveMovieID === imdbID
           ? "history-item-selected text-white"
           : "history-item"
       )}
@@ -44,7 +42,7 @@ const ViewMovieHistoryItems = ({ movie: { imdbID, title }, id }) => {
         submitButtonLabel={t("removeItemConfirmation.button")}
         title={t("removeItemConfirmation.title")}
         message={
-          <Trans i18nKey="removeItemConfirmation.message" values={title} />
+          <Trans i18nKey="removeItemConfirmation.message" values={{ title }} />
         }
         onClose={() => setShouldShowDeleteAlert(false)}
         onSubmit={handleOnAlertSubmit}
