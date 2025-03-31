@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Alert, Button, NoData, Typography } from "neetoui";
 import { isEmpty } from "ramda";
@@ -13,8 +13,6 @@ const ViewMoviesHistory = () => {
   const { movieList, getCurrentActiveMovieID, deleteAllMoviesHistory } =
     useMovieViewStore.pick();
 
-  const itemRefs = useRef([]);
-
   const [shouldShowDeleteAlert, setShouldShowDeleteAlert] = useState(false);
 
   const handleOnAlertSubmit = () => {
@@ -23,11 +21,16 @@ const ViewMoviesHistory = () => {
   };
 
   useEffect(() => {
-    if (getCurrentActiveMovieID && itemRefs.current[getCurrentActiveMovieID]) {
-      itemRefs.current[getCurrentActiveMovieID].scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      });
+    if (getCurrentActiveMovieID) {
+      const activeMovieElement = document.getElementById(
+        `movie-${getCurrentActiveMovieID}`
+      );
+      if (activeMovieElement) {
+        activeMovieElement.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
     }
   }, [getCurrentActiveMovieID]);
 
@@ -46,7 +49,7 @@ const ViewMoviesHistory = () => {
           onClick={() => setShouldShowDeleteAlert(true)}
         />
       </div>
-      <div className="my-2 flex h-4/5 flex-col gap-4 overflow-y-auto  px-4 ">
+      <div className="my-2 flex h-4/5 flex-col gap-4 overflow-y-auto px-4">
         {isEmpty(movieList) ? (
           <NoData
             className="flex h-screen w-full items-center justify-center"
@@ -56,8 +59,7 @@ const ViewMoviesHistory = () => {
           movieList.map(movie => (
             <MovieHistoryItems
               key={movie.imdbID}
-              {...movie}
-              ref={element => (itemRefs.current[movie.imdbID] = element)}
+              {...{ movie, id: `movie-${movie.imdbID}` }}
             />
           ))
         )}
